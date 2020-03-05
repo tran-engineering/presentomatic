@@ -1,8 +1,9 @@
 import 'regenerator-runtime/runtime';
 import 'css-reset-and-normalize';
 import 'github-markdown-css';
-import 'highlight.js/scss/default.scss';
+import 'highlight.js/scss/night-owl.scss';
 import '../styles/presentomatic.scss';
+
 
 import { EventEmitter } from 'events';
 import hljs from 'highlight.js';
@@ -14,7 +15,7 @@ hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('json', json);
 
 interface Slide {
-  index: number;
+  page: number;
   isTitleSlide: boolean;
   html: string;
 }
@@ -44,7 +45,7 @@ export default class Presentation extends EventEmitter {
       .selectAll<HTMLDivElement, any>('div')
       .data(this.slides, (d) => d.index)
       .join(
-        (enter) => enter.append('div').classed('title', (d) => d.isTitleSlide).text((d) => d.index + 1).on('click', (d) => this.showSlide(d.index)),
+        (enter) => enter.append('div').classed('title', (d) => d.isTitleSlide).text((d) => d.page + 1).on('click', (d) => this.showSlide(d.page)),
       )
       .classed('selected', (d) => this.currentSlide === d);
     Presentation.fadeInNav();
@@ -73,13 +74,14 @@ export default class Presentation extends EventEmitter {
 
   showSlide(index: number) {
     if (this.currentSlide === this.slides[index]) return;
-    this.slideSelection = d3.select('main').selectAll<HTMLDivElement, any>('div');
+    this.slideSelection = d3.select('main').selectAll<HTMLDivElement, any>('main > div');
     this.currentSlide = this.slides[index];
     this.updateNav();
+    console.log('current:', this.currentSlide);
     this.slideSelection
-      .data([this.currentSlide], (d) => `${d.index}`)
+      .data([this.currentSlide], (d) => `${d.page}`)
       .join(
-        (enter) => enter.append('div').html((d) => d.html),
+        (enter) => enter.append('div').classed('title-slide', (d) => d.isTitleSlide).html((d) => d.html),
         (update) => update,
         (remove) => remove.call(Presentation.fadeOutSlide),
       ).call(Presentation.fadeInSlide);
@@ -90,7 +92,7 @@ export default class Presentation extends EventEmitter {
     slide.selectAll('code')
       .nodes().forEach((el) => hljs.highlightBlock(el));
 
-    slide.selectAll<HTMLPreElement, any>('pre')
+    slide.selectAll<HTMLPreElement, any>('div.hljs')
       .on('click', (d, i, el) => navigator.clipboard.writeText(el[i].innerText));
 
     return slide.selectAll('div > *')
@@ -135,10 +137,10 @@ export default class Presentation extends EventEmitter {
   }
 
   static htmlToSlides(allHtml: string): Slide[] {
-    return allHtml.split('<hr>').map((html, index) => ({
-      index,
+    return allHtml.split('<hr>').map((html, page) => ({
+      page,
       isTitleSlide: html.includes('<h1'),
-      html,
+      html: html.replace(/<pre>/g, '<div class="hljs">').replace(/<\/pre>/g, '</div>'),
     }));
   }
 }

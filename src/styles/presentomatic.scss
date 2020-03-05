@@ -1,3 +1,9 @@
+$title-slide-bg: #1E5A96;
+$title-slide-fg: white;
+
+$normal-slide-bg: white;
+$normal-slide-fg: #1E5A96;
+
 html, body, main {
   width: 100vw;
   height: 100vh;
@@ -12,18 +18,29 @@ main {
     height: 100vh;
     width: 100vw;
     overflow: auto;
+    background-color: $normal-slide-bg;
+    color: $normal-slide-fg;
 
-    > pre {
+    &.title-slide {
+      background-color: $title-slide-bg;
+      color: $title-slide-fg;
+    }
+
+    > div.hljs {
       position: relative;
       cursor: pointer;
-    }
-    > pre::after {
-      position: absolute;
-      right: 1em;
-      bottom: 0.5em;
-      opacity: 0.3;
-      font-size: 60%;
-      content: "Click to copy";
+      border-radius: 0.4em;
+      margin: 0.5em 0;
+      white-space: pre;
+
+      &::after {
+        position: absolute;
+        right: 1em;
+        bottom: 0.5em;
+        opacity: 0.3;
+        font-size: 60%;
+        content: "Click to copy";
+      }
     }
   }
 }
@@ -42,16 +59,17 @@ nav {
     cursor: pointer;
     border-radius: 0.3em;
     border: 1px solid black;
+    background-color: white;
     min-width: 2em;
     text-align: center;
     box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
-  }
 
-  > div.title {
-    border-width: 2px;
-  }
+    &.title {
+      border-width: 2px;
+    }
 
-  > div.selected {
-    border-color: red;
+    &.selected {
+      border-color: red;
+    }
   }
 }
