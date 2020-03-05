@@ -31,7 +31,7 @@ export default class Presentation extends EventEmitter {
     super();
     this.slides = Presentation.htmlToSlides(html);
     this.initControls();
-    this.showSlide(0);
+    this.showSlide(parseInt(window.location.hash.replace('#', ''), 10));
     d3.select('nav')
       .on('mouseenter', () => Presentation.fadeInNav())
       .on('mouseleave', () => {
@@ -71,8 +71,9 @@ export default class Presentation extends EventEmitter {
       .style('opacity', 0);
   }
 
-
-  showSlide(index: number) {
+  showSlide(requestedIndex: number) {
+    const index = Math.max(0, Math.min(requestedIndex, this.slides.length - 1));
+    window.location.hash = `${index}`;
     if (this.currentSlide === this.slides[index]) return;
     this.slideSelection = d3.select('main').selectAll<HTMLDivElement, any>('main > div');
     this.currentSlide = this.slides[index];
@@ -126,10 +127,10 @@ export default class Presentation extends EventEmitter {
       const currentIndex = this.slides.indexOf(this.currentSlide);
       switch (ev.code) {
         case 'ArrowLeft':
-          this.showSlide(Math.max(0, Math.min(this.slides.length - 1, currentIndex - 1)));
+          this.showSlide(currentIndex - 1);
           break;
         case 'ArrowRight':
-          this.showSlide(Math.max(0, Math.min(this.slides.length - 1, currentIndex + 1)));
+          this.showSlide(currentIndex + 1);
           break;
         default:
       }

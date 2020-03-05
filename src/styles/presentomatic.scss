@@ -55,6 +55,17 @@ main {
         content: "Click to copy";
       }
     }
+
+    ul {
+      list-style-type: disc;
+    }
+
+    img {
+      max-width: 60vmin;
+      max-height: 60vmin;
+      display: block;
+      margin: 0 auto;
+    }
   }
 }
 
