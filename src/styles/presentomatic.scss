@@ -12,18 +12,30 @@ html, body, main {
 main {
   font-size: 150% !important;
   overflow: hidden;
+
+  background-color: $normal-slide-bg;
+
+  transition: all 600ms;
+
+  &.title-slide {
+    background-color: $title-slide-bg;
+    color: $title-slide-fg;
+  }
+
   > div {
     position: fixed;
     padding: 5vh 10vw;
     height: 100vh;
     width: 100vw;
     overflow: auto;
-    background-color: $normal-slide-bg;
     color: $normal-slide-fg;
 
     &.title-slide {
-      background-color: $title-slide-bg;
       color: $title-slide-fg;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;  
     }
 
     > div.hljs {
@@ -32,6 +44,7 @@ main {
       border-radius: 0.4em;
       margin: 0.5em 0;
       white-space: pre;
+      overflow: hidden;
 
       &::after {
         position: absolute;
@@ -64,11 +77,16 @@ nav {
     text-align: center;
     box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
 
-    &.title {
-      border-width: 2px;
+    background-color: $normal-slide-bg;
+    color: $normal-slide-fg;
+
+    &.title-slide {
+      background-color: $title-slide-bg;
+      color: $title-slide-fg;
     }
 
     &.selected {
+      border-width: 2px;
       border-color: red;
     }
   }

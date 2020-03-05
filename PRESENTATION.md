@@ -1,48 +1,6 @@
-# DESUUU
+# D3 mini workshop
 
-DESU
-
-```javascript
-d3.select('desu');
-function bla() {
-  return 'bla';
-}
-```
-
-```javascript
-d3.select('desu');
-function bla() {
-  return 'bla';
-}
-```
-
-```javascript
-d3.select('desu');
-function bla() {
-  return 'bla';
-}
-```
-
-```javascript
-d3.select('desu');
-function bla() {
-  return 'bla';
-}
-```
-
-```javascript
-d3.select('desu');
-function bla() {
-  return 'bla';
-}
-```
-
-
-```javascript
-function foo() {
-
-}
-```
+Khôi Tran
 
 ---
 

@@ -45,7 +45,7 @@ export default class Presentation extends EventEmitter {
       .selectAll<HTMLDivElement, any>('div')
       .data(this.slides, (d) => d.index)
       .join(
-        (enter) => enter.append('div').classed('title', (d) => d.isTitleSlide).text((d) => d.page + 1).on('click', (d) => this.showSlide(d.page)),
+        (enter) => enter.append('div').classed('title-slide', (d) => d.isTitleSlide).text((d) => d.page + 1).on('click', (d) => this.showSlide(d.page)),
       )
       .classed('selected', (d) => this.currentSlide === d);
     Presentation.fadeInNav();
@@ -77,7 +77,7 @@ export default class Presentation extends EventEmitter {
     this.slideSelection = d3.select('main').selectAll<HTMLDivElement, any>('main > div');
     this.currentSlide = this.slides[index];
     this.updateNav();
-    console.log('current:', this.currentSlide);
+    d3.select('main').classed('title-slide', this.currentSlide.isTitleSlide);
     this.slideSelection
       .data([this.currentSlide], (d) => `${d.page}`)
       .join(

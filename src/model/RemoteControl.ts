@@ -25,7 +25,6 @@ export default class RemoteControl extends EventEmitter {
 
   client:Paho.Client;
 
-
   constructor(private topicSuffix:string) {
     super();
     this.topic = `presentomatic/${topicSuffix}`;
