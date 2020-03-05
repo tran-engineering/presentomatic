@@ -20,13 +20,13 @@ interface Slide {
 }
 
 export default class Presentation extends EventEmitter {
-  private slides:Slide[];
+  private slides: Slide[];
 
-  private currentSlide:Slide;
+  private currentSlide: Slide;
 
-  private slideSelection:d3.Selection<HTMLDivElement, Slide, any, any>;
+  private slideSelection: d3.Selection<HTMLDivElement, Slide, any, any>;
 
-  constructor(el:HTMLElement, html: string) {
+  constructor(html: string) {
     super();
     this.slides = Presentation.htmlToSlides(html);
     this.initControls();
@@ -83,9 +83,10 @@ export default class Presentation extends EventEmitter {
         (update) => update,
         (remove) => remove.call(Presentation.fadeOutSlide),
       ).call(Presentation.fadeInSlide);
+    this.emit('slideChanged', index);
   }
 
-  static fadeInSlide(slide:d3.Selection<HTMLDivElement, Slide, any, any>) {
+  static fadeInSlide(slide: d3.Selection<HTMLDivElement, Slide, any, any>) {
     slide.selectAll('code')
       .nodes().forEach((el) => hljs.highlightBlock(el));
 
@@ -104,7 +105,7 @@ export default class Presentation extends EventEmitter {
       .style('opacity', undefined);
   }
 
-  static fadeOutSlide(slide:d3.Selection<HTMLDivElement, Slide, any, any>) {
+  static fadeOutSlide(slide: d3.Selection<HTMLDivElement, Slide, any, any>) {
     return slide.selectAll('div > *')
       .interrupt()
       .transition()
@@ -114,10 +115,11 @@ export default class Presentation extends EventEmitter {
       .style('transform', 'translate(40px,-10px)')
       .style('opacity', 0)
       .end()
-      .then(() => slide.remove());
+      .then(() => slide.remove())
+      .catch(() => {});
   }
 
-  initControls():void {
+  initControls(): void {
     window.addEventListener('keydown', (ev) => {
       const currentIndex = this.slides.indexOf(this.currentSlide);
       switch (ev.code) {
@@ -132,7 +134,7 @@ export default class Presentation extends EventEmitter {
     });
   }
 
-  static htmlToSlides(allHtml:string):Slide[] {
+  static htmlToSlides(allHtml: string): Slide[] {
     return allHtml.split('<hr>').map((html, index) => ({
       index,
       isTitleSlide: html.includes('<h1'),
