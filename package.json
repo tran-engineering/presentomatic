@@ -30,9 +30,7 @@
     "events": "^3.1.0",
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^9.18.1",
-    "mqtt": "^3.0.0",
     "paho-mqtt": "^1.1.0",
-    "peerjs": "^1.2.0",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {

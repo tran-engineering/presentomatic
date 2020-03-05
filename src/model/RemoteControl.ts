@@ -23,12 +23,11 @@ export default class RemoteControl extends EventEmitter {
 
   topic:string;
 
-  client:any;
+  client:Paho.Client;
 
 
   constructor(private topicSuffix:string) {
     super();
-    console.log(Paho);
     this.topic = `presentomatic/${topicSuffix}`;
     window.addEventListener('keydown', ({ code }) => {
       if (code !== this.cheatState.shift()) {
@@ -38,55 +37,39 @@ export default class RemoteControl extends EventEmitter {
         this.active = true;
       }
     });
-    this.client = new Paho.Client('broker.hivemq.com', 8000, `presentomatic_${Math.random().toString(16).substr(2, 8)}`);
-    this.client.onConnection = () => {
-      console.log('connected2');
-      this.client.subscribe(this.topic);
-    };
 
-    this.client.onMessageArrived = (message) => console.log('message', message);
-    this.client.connect({ onSuccess: () => console.log('connected!') });
+    // this.client = new Paho.Client('wss://presentomatic.herokuapp.com/mqtt', `presentomatic_${Math.random().toString(16).substr(2, 8)}`);
+    this.client = new Paho.Client('wss://test.mosquitto.org:8081/mqtt', `presentomatic_${Math.random().toString(16).substr(2, 8)}`);
+    this.client.onMessageArrived = (message) => this.receive(message);
+    this.client.connect({
+      onSuccess: () => this.onConnection(),
+      onFailure: (err) => console.log('fail', err),
+    });
+
     this.client.onConnectionLost = (res) => console.log('connectionLost!', res);
-    // .connect('ws://test.mosquitto.org:8081', { clientId: `presentomatic_${Math.random().toString(16).substr(2, 8)}`, reschedulePings: true, clean: true });
-    /* console.log('clientId', this.client.options.clientId);
-    this.client.on('connect', (ack) => {
-      console.log('connected!', ack);
-      this.client.subscribe(this.topic, (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log('subscribed to', this.topic);
-        }
-      });
-    });
-
-    this.client.on('message', (t, message) => {
-      console.log('message!!!');
-      if (t === this.topic) {
-        this.receive(message);
-      } else {
-        console.warn('Message from unknown topic received', t, message);
-      }
-    });
-    this.client.on('error', console.error);
-    this.client.on('reconnect', () => console.log('reconnect'));
-    this.client.on('close', () => console.log('close'));
-    this.client.on('disconnect', (packet) => console.error(packet)); */
   }
 
-  send(message) {
+  onConnection() {
+    console.log('connected!');
+    this.client.subscribe(this.topic);
+    console.log('subbed!');
+  }
+
+  send(command, payload) {
     if (this.active) {
-      console.log('messageSEnd', this.topic, message);
-      const m = new Paho.Message(JSON.stringify(message));
+      const m = new Paho.Message(JSON.stringify({ command, payload }));
       m.destinationName = this.topic;
       this.client.send(m);
+
+      // this.client.publish(this.topic, { message });
     }
   }
 
-  receive(message) {
+  receive(message:Paho.Message) {
     if (!this.active) {
       console.log('messageReceived', message);
-      this.emit('message', message);
+      const { command, payload } = JSON.parse(message.payloadString);
+      this.emit(command, payload);
     } else {
       console.log('ignoring', message);
     }
