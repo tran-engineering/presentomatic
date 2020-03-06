@@ -61,3 +61,9 @@ d3.select('body')
 ---
 
 ## D3 the data binder
+
+Data is bound to DOM elements in D3.
+
+```javascript
+
+```
