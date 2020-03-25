@@ -10,9 +10,39 @@ A pot-pourri of functions to help you all kind of stuffs.
 
 I mean all kind of random stuffs, like lodash, jQuery, XMLHttpRequest, some math, physics simulation, animation... aaand last but not least some helpers for rendering on SVG and Canvas!
 
-... let's make aquaintance of them!
+... so let's pick at the top of the ice berg by hacking a **D3 visualization app by ourselves**!
 
-**Spoiler alert: Exercises included!**
+---
+
+## Khôi's data visualization cookbook
+
+1. Find a suitable data source
+2. Basic visualization idea
+3. Prepare your data (this is important!)
+4. ???
+5. Visualize it!
+
+---
+
+# Step 1: Find a suitable data source
+
+Example:
+
+https://data.opendatasoft.com/explore/dataset/open-beer-database%40public-us/export/
+
+---
+
+# Step 2: Basic visualization idea
+
+1. List
+2. HTML table
+3. HTML table by country
+4. Bubble chart
+
+---
+
+# Step 3: Prepare your data
+
 
 ---
 
