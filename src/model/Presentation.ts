@@ -31,7 +31,8 @@ export default class Presentation extends EventEmitter {
     super();
     this.slides = Presentation.htmlToSlides(html);
     this.initControls();
-    this.showSlide(parseInt(window.location.hash.replace('#', ''), 10));
+    const start = parseInt(window.location.hash.replace('#', ''), 10);
+    this.showSlide(Number.isNaN(start) ? 0 : start);
     d3.select('nav')
       .on('mouseenter', () => Presentation.fadeInNav())
       .on('mouseleave', () => {
