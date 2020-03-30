@@ -243,7 +243,13 @@ d3.select('main') // select the first html <main> tag
 
 ---
 
-## Exercise 2: Bubble chart
+# Exercise 2: A simple chart using D3
+
+I usually don't recommend drawing charts with D3, but when I do, I'll probably land in hell.
+
+---
+
+## Exercise 3: Bubble chart
 
 ---
 
