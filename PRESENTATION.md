@@ -4,7 +4,15 @@ Khôi Tran
 
 ---
 
-## What's D3 anyway?
+## Hands up
+
+Who ever worked with D3 yet?
+
+![fsdf](https://ahseeit.com//king-include/uploads/2019/10/69785157_480602692791661_4152319240238432258_n-7552999206.jpg)
+
+---
+
+## What's D3?
 
 A pot-pourri of functions to help you all kind of stuffs.
 
@@ -17,14 +25,32 @@ By only using javascript and d3 and **no other libraries**.
 
 ## Khôi's data visualization cookbook
 
-1. Find a suitable data source
-2. Basic visualization idea
+1. Basic visualization idea
+2. Find a suitable data source
 3. Prepare your data (this is important!)
 4. Visualize it!
 
+Nice sources of data:
+
+* https://opendata.swiss
+* https://data.opendatasoft.com
+
 ---
 
-## Step 1: Find a suitable data source
+## Step 1: Basic visualization idea
+
+1. Current total cases in HTML list and table by canton<br>
+   D3 as DOM manipulator
+2. Basic chart<br>
+   D3 as SVG Helper
+3. Bubble chart<br>
+   D3 as physics simulator
+4. On a colored map!<br>
+   D3 as GeoJSON drawer
+
+---
+
+## Step 2: Find a suitable data source
 
 Finding good, machine-readable, useable data is probably the most difficult task.
 
@@ -32,23 +58,11 @@ For our hacking course:
 
 https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv
 
----
+Also clone the d3-sandbox I prepared:
 
-## Step 2: Basic visualization idea
-
-1. Current total cases in HTML list and table by canton
- * d3 as DOM manipulator
-
-2. Bubble chart
- * d3 as physics simulator
-
-3. Basic chart
- * d3 as SVG helper
-
-4. On a colored map!
- * use d3 as GeoJSON helper
-
-Let's do them as exercises!
+```bash
+git clone https://github.com/KeeTraxx/d3-sandbox
+```
 
 ---
 
@@ -59,7 +73,7 @@ I've never found any data sources without issues:
  * Inconsistent data
  * Encoding issues (UTF-8, ISO, etc.)
 
-Common pitfalls:
+Common pitfalls for D3:
  * Loading data from CSV has no types - all data are strings.
  * Use Javascript Date Objects
 
@@ -69,9 +83,12 @@ Common pitfalls:
 
 # Exercise 1: Display a HTML Table
 
+![](./src/
+img/exercise1.png)
+
 ---
 
-## E1: Our data?!
+## Our data?!
 
 The first question: Is our data already in the right form for this visualization?
 
@@ -79,7 +96,7 @@ What would we have to change?
 
 ---
 
-## E1: D3 data grouping
+## D3 data grouping
 
 `d3.nest()` can group and aggregate data.
 
@@ -96,11 +113,13 @@ What would we have to change?
   console.log(groupedData);
 ```
 
+Similar to `_.pluck(...)`
+
 ---
 
-## E1: d3 data aggregation
+## D3 data aggregation
 
-`d3.nest().rollup()` can perform functions on groups.
+`d3.nest().rollup()` can perform functions on nested data.
 
 ```javascript
   const aggregator = d3.nest()
@@ -109,14 +128,13 @@ What would we have to change?
 
   const totalCasesByCanton = aggregator.entries(data)
     .sort((a,b) => d3.descending(a.value, b.value));
-  // [{key: "BE", value: 259}, {key: "ZH", value: 542}]
 
   console.log(totalCasesByCanton);
 ```
 
 ---
 
-## E1: display data in a simple list
+## Display data in a simple list
 
 D3 as DOM manipulator
 
@@ -131,7 +149,7 @@ D3 as DOM manipulator
 
 ---
 
-## E1: display data in a table
+## Display data in a table
 
 ```javascript
   d3.select('main') // select the first html <main> tag
@@ -147,9 +165,9 @@ D3 as DOM manipulator
 
 ---
 
-## E1: colorize your data
+## Colorize your data
 
-We wan't to get a color for a value,
+This is a visualization workshop, so it has to be colorful!
 
 ... so let's learn about d3 scales!
 
@@ -166,10 +184,10 @@ We wan't to get a color for a value,
 
 * `d3.scaleLinear()`: Continuous domain -> continuous range. (value -> screen x coordinate)
 * `d3.scaleLog()`: Continuous domain -> logarithmic range (logarithmic charts)
-* `d3.scaleTime()`: Continuous domain (Date objects) -> continous range
-* `d3.scaleThreshold()`: Continous domain -> discrete range (< 200 : 'red', > 200: 'yellow', > 1000: 'green')
+* `d3.scaleTime()`: Continuous domain (Javascript Dates) -> continous range
+* `d3.scaleThreshold()`: Continous domain -> discrete range (< 200 : 'green', > 200: 'yellow', > 1000: 'red')
 * `d3.scaleQuantize()`: like threshold, but let d3 compute range (split domain to equal parts)
-* `d3.scaleQuantile()`: like threshold, but let d3 compute range (split domain to frequency)
+* `d3.scaleQuantile()`: like threshold, but let d3 compute range (split domain according to data frequency)
 
 ---
 
@@ -240,7 +258,6 @@ d3.select('main') // select the first html <main> tag
   .style('background-color', d => quantileColor(d.value)); // try out other scales!
 ```
 
-
 ---
 
 # Exercise 1 done: questions?
@@ -285,7 +302,7 @@ Don't do it with d3! But let's get on with that cold shower...
 ```javascript
   const x = d3.scaleTime()
     .domain(d3.extent(data, d => d.date))
-    .range([0,900]);
+    .range([0,800]);
 
   const xAxis = d3.axisBottom(x);
 
@@ -333,7 +350,8 @@ A line generator creates a string for the "d" attribute in SVG <path> elements.
     .selectAll('path')
     .data(groupedData)
     .join('path')
-    .attr('d', d => line(d));
+    .style('stroke', (d, i) => d3.schemeCategory10[i % 10])
+    .attr('d', d => line(d.values));
 ```
 
 ---
@@ -347,9 +365,9 @@ A line generator creates a string for the "d" attribute in SVG <path> elements.
     .data(groupedData)
     .join('text')
     .text(d => d.key)
-    .attr('x', d => x(d.values.slice(-1)[0]))
-    .attr('y', d => y(d.values.slice(-1)[0]))
-    .style('stroke', (d,i) => d3.schemeCategory10[i%11]);
+    .attr('x', d => x(d.values.slice(-1)[0].date))
+    .attr('y', d => y(d.values.slice(-1)[0].total_currently_positive_cases))
+    .style('fill', (d, i) => d3.schemeCategory10[i % 10]);
 ```
 
 ---

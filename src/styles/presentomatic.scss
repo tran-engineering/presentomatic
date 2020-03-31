@@ -10,7 +10,7 @@ html, body, main {
 }
 
 main {
-  font-size: 150% !important;
+  font-size: 200% !important;
   overflow: hidden;
 
   background-color: $normal-slide-bg;
@@ -49,15 +49,24 @@ main {
       &::after {
         position: absolute;
         right: 1em;
-        bottom: 0.5em;
+        bottom: 1.5em;
         opacity: 0.3;
         font-size: 60%;
         content: "Click to copy";
       }
     }
 
+    p > code.hljs {
+      background: #011627;
+      display: inline;
+    }
+
     ul {
       list-style-type: disc;
+    }
+
+    ol {
+      list-style-type: decimal;
     }
 
     img {
