@@ -84,14 +84,16 @@ What would we have to change?
 `d3.nest()` can group and aggregate data.
 
 ```javascript
-const groupByCanton = d3.nest()
-  .key(d => d.abbreviation_canton);
+  const groupByCanton = d3.nest()
+    .key(d => d.abbreviation_canton);
 
-const groupedData = groupByCanton.entries(data);
-// [{key: "BE", values: [...], key: "ZH", values: [...]}]
+  const groupedData = groupByCanton.entries(data);
+  // [{key: "BE", values: [...], key: "ZH", values: [...]}]
 
-const groupedObject = groupByCanton.object(data);
-// {BE: [...], ZH: [...]}
+  const groupedObject = groupByCanton.object(data);
+  // {BE: [...], ZH: [...]}
+
+  console.log(groupedData);
 ```
 
 ---
@@ -101,13 +103,15 @@ const groupedObject = groupByCanton.object(data);
 `d3.nest().rollup()` can perform functions on groups.
 
 ```javascript
-const aggregator = d3.nest()
-  .key(d => d.abbreviation_canton)
-  .rollup(values => d3.max(values, d => d.total_currently_positive_cases));
+  const aggregator = d3.nest()
+    .key(d => d.abbreviation_canton)
+    .rollup(values => d3.max(values, d => d.total_currently_positive_cases));
 
-const totalCasesByCanton = aggregator.entries(data)
-  .sort((a,b) => d3.descending(a.value, b.value));
-// [{key: "BE", value: 259}, {key: "ZH", value: 542}]
+  const totalCasesByCanton = aggregator.entries(data)
+    .sort((a,b) => d3.descending(a.value, b.value));
+  // [{key: "BE", value: 259}, {key: "ZH", value: 542}]
+
+  console.log(totalCasesByCanton);
 ```
 
 ---
@@ -117,12 +121,12 @@ const totalCasesByCanton = aggregator.entries(data)
 D3 as DOM manipulator
 
 ```javascript
-d3.select('main') // select the first html <main> tag
-  .append('ul') // append an <ul> tag
-  .selectAll('li') // for all all <li> tags...
-  .data(totalCasesByCanton) // ... bind the data array
-  .join('li') // append a new <li> DOM element
-  .text(d => `${d.key} : ${d.value}`);
+  d3.select('main') // select the first html <main> tag
+    .append('ul') // append an <ul> tag
+    .selectAll('li') // for all all <li> tags...
+    .data(totalCasesByCanton) // ... bind the data array
+    .join('li') // append a new <li> DOM element
+    .text(d => `${d.key} : ${d.value}`);
 ```
 
 ---
@@ -130,14 +134,14 @@ d3.select('main') // select the first html <main> tag
 ## E1: display data in a table
 
 ```javascript
-d3.select('main') // select the first html <main> tag
-  .append('table') // append an <ul> tag
-  .selectAll('tr') // for all all <li> tags...
-  .data(totalCasesByCanton) // ... bind the data array
-  .join('tr') // append a <tr> element
-  .call(tr => { // append <td> elements on <tr>
-    tr.append('td').text(d => d.key);
-    tr.append('td').text(d => d.value);
+  d3.select('main') // select the first html <main> tag
+    .append('table') // append an <ul> tag
+    .selectAll('tr') // for all all <li> tags...
+    .data(totalCasesByCanton) // ... bind the data array
+    .join('tr') // append a <tr> element
+    .call(tr => { // append <td> elements on <tr>
+      tr.append('td').text(d => d.key);
+      tr.append('td').text(d => d.value);
   });
 ```
 
@@ -246,6 +250,107 @@ d3.select('main') // select the first html <main> tag
 # Exercise 2: A simple chart using D3
 
 I usually don't recommend drawing charts with D3, but when I do, I'll probably land in hell.
+
+---
+
+## Disclaimer
+
+If you just need a simple chart, just use a library for that!
+
+* chart.js
+* anychart
+
+Don't do it with d3! But let's get on with that cold shower...
+
+---
+
+## Add a SVG element to our document
+
+```javascript
+  const chartElement = d3.select('main')
+    .append('svg')
+    .attr('width', 960)
+    .attr('height', 500)
+    .attr('viewBox', '0 0 960 500')
+    .append('g')
+    .attr('transform', 'translate(50,50)');
+
+  // chartElement references the <g> element
+```
+
+---
+
+## Add the horizontal scale and axe
+
+```javascript
+  const x = d3.scaleTime()
+    .domain(d3.extent(data, d => d.date))
+    .range([0,900]);
+
+  const xAxis = d3.axisBottom(x);
+
+  chartElement
+    .append('g')
+    .attr('transform', 'translate(0,400)')
+    .call(xAxis);
+```
+
+---
+
+## Add the vertical scale and axe
+
+```javascript
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.total_currently_positive_cases))
+    .range([400,0]);
+
+  const yAxis = d3.axisLeft(y);
+
+  chartElement
+    .append('g')
+    .call(yAxis);
+```
+
+---
+
+## Create our line generator
+
+```javascript
+  const line = d3.line()
+    .x(d => x(d.date))
+    .y(d => y(d.total_currently_positive_cases));
+```
+
+A line generator creates a string for the "d" attribute in SVG <path> elements.
+
+---
+
+## Draw a line for each canton
+
+```javascript
+  chartElement
+    .append('g')
+    .selectAll('path')
+    .data(groupedData)
+    .join('path')
+    .attr('d', d => line(d));
+```
+
+---
+
+## Add a label for each canton
+
+```javascript
+  chartElement
+    .append('g')
+    .selectAll('text')
+    .data(groupedData)
+    .join('text')
+    .text(d => d.key)
+    .attr('x', d => x(d.values.slice(-1)[0]))
+    .attr('y', d => y(d.values.slice(-1)[0]))
+    .style('stroke', (d,i) => d3.schemeCategory10[i%11]);
+```
 
 ---
 
