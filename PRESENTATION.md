@@ -372,7 +372,95 @@ A line generator creates a string for the "d" attribute in SVG <path> elements.
 
 ---
 
-## Exercise 3: Bubble chart
+# Exercise 3: Bubble chart
+
+![](./src/img/exercise3.png)
 
 ---
+
+## How does it work?
+
+D3 has a built in physics simulation with `d3.forceSimulation()`.
+
+It adds extra fields (`x, y, vx, vy`) to each element of your data array.
+
+---
+
+## Define a scale for our bubble sizes
+
+```javascript
+  const bubbleSize = d3.scaleLinear()
+    .domain(d3.extent(totalCasesByCanton, d => d.value))
+    .range([10, 100]);
+```
+
+---
+
+## Define a force simulation
+
+```javascript
+  const simulation = d3.forceSimulation(totalCasesByCanton)
+    .force('collide', d3.forceCollide().strength(0.5).radius(d => bubbleSize(d.value) * 1.1)) // bubbles push each other away
+    .force('centerX', d3.forceX().strength(0.01)) // attract bubbles to center
+    .force('centerY', d3.forceY().strength(0.01));
+```
+
+---
+
+## Replace our svg element
+```javascript
+  const bubbleContainer = d3.select('main')
+    .append('svg')
+    .attr('width', 960)
+    .attr('height', 500)
+    .append('g')
+    .style('transform', 'translate(50%, 50%)')
+```
+
+---
+
+## Add bubbles to our SVG element
+```javascript
+  bubbleContainer.selectAll('circle')
+      .data(totalCasesByCanton)
+      .join('circle')
+      .attr('r', d => bubbleSize(d.value))
+      .attr('fill', d => quantizeColor(d.value));
+```
+
+---
+
+## Add labels to our bubbles
+
+```javascript
+  bubbleContainer.selectAll('text')
+    .data(totalCasesByCanton)
+    .join('text')
+    .text(d => d.key);
+```
+
+---
+
+## Apply the force simulation
+
+```javascript
+  simulation.on('tick', () => {
+    bubbleContainer
+      .selectAll('circle')
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y);
+
+    bubbleContainer
+      .selectAll('text')
+      .attr('x', d => d.x)
+      .attr('y', d => d.y);
+  });
+```
+
+---
+
+# Exercise 4: On a map
+
+---
+
 
