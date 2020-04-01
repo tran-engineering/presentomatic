@@ -59,6 +59,7 @@ Nice sources of data:
 
 * https://opendata.swiss
 * https://data.opendatasoft.com
+* https://github.com/awesomedata/awesome-public-datasets
 
 ---
 
