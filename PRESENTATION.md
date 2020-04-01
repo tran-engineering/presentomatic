@@ -31,11 +31,17 @@ Who ever worked with D3 yet?
 
 ---
 
-## What's D3?
+## What's D3 in a nutshell?
 
 A pot-pourri of functions to help you all kind of stuffs.
 
 I mean all kind of random stuffs, like lodash, jQuery, XMLHttpRequest, some math, physics simulation, animation... aaand last but not least some helpers for rendering on SVG and Canvas!
+
+Also D3:
+
+* hard to read [API](https://github.com/d3/d3/blob/master/API.md)
+* abysmal error reporting
+* wrong expectations of users
 
 ... so let's pick at the top of the ice berg by hacking a **D3 visualization app by ourselves**!
 By only using javascript and d3 and **no other libraries**.
