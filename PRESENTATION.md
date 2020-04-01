@@ -459,8 +459,86 @@ It adds extra fields (`x, y, vx, vy`) to each element of your data array.
 
 ---
 
-# Exercise 4: On a map
+# Exercise 4: A coded map
 
 ---
 
+## Replace our SVG element
 
+```javascript
+  const map = d3.select('main')
+    .append('svg')
+    .attr('width', 960)
+    .attr('height', 500)
+    .append('g');
+```
+
+---
+
+## Load cantons as JSON
+
+```javascript
+  const cantons = require('./geojson/cantons.json');
+```
+
+---
+
+## Map our data with the cantons
+
+```javascript
+  cantons.features.forEach(d => d.properties.total_currently_positive_cases = totalCasesByCanton.find(c => c.key == d.properties.abbr).value);
+```
+
+---
+
+## Define a projection and path generator
+
+```javascript
+  const projection = d3.geoMercator()
+    .fitSize([960,500], cantons);
+
+  const path = d3.geoPath()
+    .projection(projection);
+```
+
+---
+
+## Draw all cantons
+
+```javascript
+  map.selectAll('path')
+    .data(cantons.features)
+    .join('path')
+    .attr('d', d => path(d));
+```
+
+---
+
+## Add some fancyness
+
+```javascript
+  map.selectAll('path')
+    .data(cantons.features)
+    .join('path')
+    .attr('d', d => path(d))
+    .style('opacity', 0)
+    .attr('transform', 'rotate(30)translate(-100, -100)')
+    .style('fill', d => quantileColor(d.properties.total_currently_positive_cases))
+    .transition()
+    .delay((d,i) => i * 100)
+    .attr('transform', 'translate(0, 0)')
+    .style('opacity', 1);
+```
+
+---
+
+## Add panning and zooming
+
+```javascript
+  const zoom = d3.zoom();
+  zoom.on('zoom', () => {
+    const transform = d3.event.transform;
+    map.attr('transform', `translate(${transform.x},${transform.y})scale(${transform.k})`);
+  });
+  d3.select('svg').call(zoom);
+```
