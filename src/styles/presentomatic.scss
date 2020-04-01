@@ -82,6 +82,7 @@ nav {
   position: fixed;
   bottom: 1em;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
   left: 5vw;
