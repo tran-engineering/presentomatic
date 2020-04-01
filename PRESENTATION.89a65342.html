@@ -1,4 +1,9 @@
-<h1 id="d3-mini-workshop">D3 mini workshop</h1><p>Khôi Tran</p><hr><h2 id="hands-up">Hands up</h2><p>Who ever worked with D3 yet?</p><p><img src="https://ahseeit.com//king-include/uploads/2019/10/69785157_480602692791661_4152319240238432258_n-7552999206.jpg" alt="fsdf"></p><hr><h2 id="whats-d3">What&#39;s D3?</h2><p>A pot-pourri of functions to help you all kind of stuffs.</p><p>I mean all kind of random stuffs, like lodash, jQuery, XMLHttpRequest, some math, physics simulation, animation... aaand last but not least some helpers for rendering on SVG and Canvas!</p><p>... so let&#39;s pick at the top of the ice berg by hacking a <strong>D3 visualization app by ourselves</strong>!
+<h1 id="d3-mini-workshop">D3 mini workshop</h1><p>Khôi Tran</p><hr><h2 id="workshop-setup">Workshop setup</h2><p>Presentation:</p><p><a href="https://d3-techworkshop.compile.ch">https://d3-techworkshop.compile.ch</a></p><p>D3 Sandbox:</p><pre><code class="language-bash">git clone https://github.com/KeeTraxx/d3-sandbox
+cd d3-sandbox
+npm i
+npm start
+
+# browse to http://localhost:1234</code></pre><hr><h2 id="hands-up">Hands up</h2><p>Who ever worked with D3 yet?</p><p><img src="https://ahseeit.com//king-include/uploads/2019/10/69785157_480602692791661_4152319240238432258_n-7552999206.jpg" alt="fsdf"></p><hr><h2 id="whats-d3">What&#39;s D3?</h2><p>A pot-pourri of functions to help you all kind of stuffs.</p><p>I mean all kind of random stuffs, like lodash, jQuery, XMLHttpRequest, some math, physics simulation, animation... aaand last but not least some helpers for rendering on SVG and Canvas!</p><p>... so let&#39;s pick at the top of the ice berg by hacking a <strong>D3 visualization app by ourselves</strong>!
 By only using javascript and d3 and <strong>no other libraries</strong>.</p><hr><h2 id="khôis-data-visualization-cookbook">Khôi&#39;s data visualization cookbook</h2><ol>
 <li>Basic visualization idea</li>
 <li>Find a suitable data source</li>
@@ -16,7 +21,7 @@ D3 as SVG Helper</li>
 D3 as physics simulator</li>
 <li>On a colored map!<br>
 D3 as GeoJSON drawer</li>
-</ol><hr><h2 id="step-2-find-a-suitable-data-source">Step 2: Find a suitable data source</h2><p>Finding good, machine-readable, useable data is probably the most difficult task.</p><p>For our hacking course:</p><p><a href="https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv">https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv</a></p><p>Also clone the d3-sandbox I prepared:</p><pre><code class="language-bash">git clone https://github.com/KeeTraxx/d3-sandbox</code></pre><hr><h2 id="step-3-prepare-your-data">Step 3: Prepare your data</h2><p>I&#39;ve never found any data sources without issues:</p><ul>
+</ol><hr><h2 id="step-2-find-a-suitable-data-source">Step 2: Find a suitable data source</h2><p>Finding good, machine-readable, useable data is probably the most difficult task.</p><p>For our hacking course:</p><p><a href="https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv">https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv</a></p><hr><h2 id="step-3-prepare-your-data">Step 3: Prepare your data</h2><p>I&#39;ve never found any data sources without issues:</p><ul>
 <li>Missing data points</li>
 <li>Inconsistent data</li>
 <li>Encoding issues (UTF-8, ISO, etc.)</li>
