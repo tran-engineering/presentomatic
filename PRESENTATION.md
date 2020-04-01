@@ -479,7 +479,7 @@ It adds extra fields (`x, y, vx, vy`) to each element of your data array.
 
 ---
 
-# Exercise 4: A coded map
+# Exercise 4: Our data on a map
 
 ---
 
