@@ -33,8 +33,7 @@ D3 as GeoJSON drawer</li>
 </ul><p>Common pitfalls for D3:</p><ul>
 <li>Loading data from CSV has no types - all data are strings.</li>
 <li>Use Javascript Date Objects</li>
-</ul><p><code>fetchCovidData()</code> fetches and transforms data. Let&#39;s have a look at it.</p><hr><h1 id="exercise-1-display-a-html-table">Exercise 1: Display a HTML Table</h1><p>![](./src/
-img/exercise1.png)</p><hr><h2 id="our-data">Our data?!</h2><p>The first question: Is our data already in the right form for this visualization?</p><p>What would we have to change?</p><hr><h2 id="d3-data-grouping">D3 data grouping</h2><p><code>d3.nest()</code> can group and aggregate data.</p><pre><code class="language-javascript">  const groupByCanton = d3.nest()
+</ul><p><code>fetchCovidData()</code> fetches and transforms data. Let&#39;s have a look at it.</p><hr><h1 id="exercise-1-display-a-html-table">Exercise 1: Display a HTML Table</h1><p><img src="/exercise1.cd3594af.png" alt=""></p><hr><h2 id="our-data">Our data?!</h2><p>The first question: Is our data already in the right form for this visualization?</p><p>What would we have to change?</p><hr><h2 id="d3-data-grouping">D3 data grouping</h2><p><code>d3.nest()</code> can group and aggregate data.</p><pre><code class="language-javascript">  const groupByCanton = d3.nest()
     .key(d =&gt; d.abbreviation_canton);
 
   const groupedData = groupByCanton.entries(data);
@@ -193,7 +192,23 @@ const quantileColor = d3.scaleQuantile()
     .append(&#39;svg&#39;)
     .attr(&#39;width&#39;, 960)
     .attr(&#39;height&#39;, 500)
-    .append(&#39;g&#39;);</code></pre><hr><h2 id="load-cantons-as-json">Load cantons as JSON</h2><pre><code class="language-javascript">  const cantons = require(&#39;./geojson/cantons.json&#39;);</code></pre><hr><h2 id="map-our-data-with-the-cantons">Map our data with the cantons</h2><pre><code class="language-javascript">  cantons.features.forEach(d =&gt; d.properties.total_currently_positive_cases = totalCasesByCanton.find(c =&gt; c.key == d.properties.abbr).value);</code></pre><hr><h2 id="define-a-projection-and-path-generator">Define a projection and path generator</h2><pre><code class="language-javascript">  const projection = d3.geoMercator()
+    .append(&#39;g&#39;);</code></pre><hr><h2 id="load-cantons-as-json">Load cantons as JSON</h2><pre><code class="language-javascript">  const cantons = require(&#39;./geojson/cantons.json&#39;);</code></pre><hr><h2 id="small-excursion-geojson">Small excursion: GeoJSON</h2><p>GeoJSON is a format for encoding a variety of geometric data structures.</p><p><a href="https://tools.ietf.org/html/rfc7946">RFC 7946 Spec</a></p><pre><code class="language-json">{
+  &quot;type&quot;: &quot;Feature&quot;,
+  &quot;id&quot;: &quot;1234&quot;,
+  &quot;geometry&quot;: {
+    // can be Point, Polygon, LineString, MultiLineString, MultiPolygon
+    &quot;type&quot;: &quot;Point&quot;,
+    &quot;coordinates&quot;: [7.4971, 46.9756]
+  },
+  &quot;properties&quot;: {
+    &quot;floors&quot;: 3,
+    &quot;area&quot;: 130,
+    &quot;name&quot;: &quot;Khôi&#39;s home&quot;
+  }
+}</code></pre><hr><h2 id="geojson-feature-collections">GeoJSON feature collections</h2><pre><code class="language-json">{
+  &quot;type&quot;: &quot;FeatureCollection&quot;,
+  &quot;features&quot;: [&quot;...&quot;]
+}</code></pre><p>Recommended library to work with GeoJSON:</p><p><a href="https://turfjs.org/">turf.js</a></p><hr><h2 id="map-our-data-with-the-cantons">Map our data with the cantons</h2><pre><code class="language-javascript">  cantons.features.forEach(d =&gt; d.properties.total_currently_positive_cases = totalCasesByCanton.find(c =&gt; c.key == d.properties.abbr).value);</code></pre><hr><h2 id="define-a-projection-and-path-generator">Define a projection and path generator</h2><pre><code class="language-javascript">  const projection = d3.geoMercator()
     .fitSize([960,500], cantons);
 
   const path = d3.geoPath()
