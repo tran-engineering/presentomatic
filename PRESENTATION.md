@@ -4,6 +4,25 @@ Khôi Tran
 
 ---
 
+## Workshop setup
+
+Presentation:
+
+https://d3-techworkshop.compile.ch
+
+D3 Sandbox:
+
+```bash
+git clone https://github.com/KeeTraxx/d3-sandbox
+cd d3-sandbox
+npm i
+npm start
+
+# browse to http://localhost:1234
+```
+
+---
+
 ## Hands up
 
 Who ever worked with D3 yet?
@@ -58,11 +77,6 @@ For our hacking course:
 
 https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv
 
-Also clone the d3-sandbox I prepared:
-
-```bash
-git clone https://github.com/KeeTraxx/d3-sandbox
-```
 
 ---
 
