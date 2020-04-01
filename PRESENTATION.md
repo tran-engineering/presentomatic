@@ -104,8 +104,7 @@ Common pitfalls for D3:
 
 # Exercise 1: Display a HTML Table
 
-![](./src/
-img/exercise1.png)
+![](./src/img/exercise1.png)
 
 ---
 
@@ -501,6 +500,46 @@ It adds extra fields (`x, y, vx, vy`) to each element of your data array.
 ```javascript
   const cantons = require('./geojson/cantons.json');
 ```
+
+---
+
+## Small excursion: GeoJSON
+
+GeoJSON is a format for encoding a variety of geometric data structures.
+
+[RFC 7946 Spec](https://tools.ietf.org/html/rfc7946)
+
+```json
+{
+  "type": "Feature",
+  "id": "1234",
+  "geometry": {
+    // can be Point, Polygon, LineString, MultiLineString, MultiPolygon
+    "type": "Point",
+    "coordinates": [7.4971, 46.9756]
+  },
+  "properties": {
+    "floors": 3,
+    "area": 130,
+    "name": "Khôi's home"
+  }
+}
+```
+
+---
+
+## GeoJSON feature collections
+
+```json
+{
+  "type": "FeatureCollection",
+  "features": ["..."]
+}
+```
+
+Recommended library to work with GeoJSON:
+
+[turf.js](https://turfjs.org/)
 
 ---
 
