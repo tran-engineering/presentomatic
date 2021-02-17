@@ -17,6 +17,7 @@ hljs.registerLanguage('json', json);
 interface Slide {
   page: number;
   isTitleSlide: boolean;
+  title: string;
   html: string;
 }
 
@@ -37,7 +38,6 @@ export default class Presentation extends EventEmitter {
       .on('mouseenter', () => Presentation.fadeInNav())
       .on('mouseleave', () => {
         Presentation.fadeOutNav();
-        console.log('mouseleave');
       });
   }
 
@@ -88,6 +88,7 @@ export default class Presentation extends EventEmitter {
         (remove) => remove.call(Presentation.fadeOutSlide),
       ).call(Presentation.fadeInSlide);
     this.emit('slideChanged', index);
+    d3.select('title').text(this.currentSlide.title);
   }
 
   static fadeInSlide(slide: d3.Selection<HTMLDivElement, Slide, any, any>) {
@@ -143,6 +144,7 @@ export default class Presentation extends EventEmitter {
       page,
       isTitleSlide: html.includes('<h1'),
       html: html.replace(/<pre>/g, '<div class="hljs">').replace(/<\/pre>/g, '</div>'),
+      title: html.match(/<h\d\s(.*?)>(.*?)<\/h\d>/)[2],
     }));
   }
 }
