@@ -3,37 +3,7 @@ cd d3-sandbox
 npm i
 npm start
 
-# browse to http://localhost:1234</code></pre><hr><h2 id="hands-up">Hands up</h2><p>Who ever worked with D3 yet?</p><p><img src="https://ahseeit.com//king-include/uploads/2019/10/69785157_480602692791661_4152319240238432258_n-7552999206.jpg" alt="fsdf"></p><hr><h2 id="whats-d3-in-a-nutshell">What&#39;s D3 in a nutshell?</h2><p>A pot-pourri of functions to help you all kind of stuffs.</p><p>I mean all kind of random stuffs, like lodash, jQuery, XMLHttpRequest, some math, physics simulation, animation... aaand last but not least some helpers for rendering on SVG and Canvas!</p><p>Also D3:</p><ul>
-<li>hard to read <a href="https://github.com/d3/d3/blob/master/API.md">API</a></li>
-<li>abysmal error reporting</li>
-<li>wrong expectations of users</li>
-</ul><p>... so let&#39;s pick at the top of the ice berg by hacking a <strong>D3 visualization app by ourselves</strong>!
-By only using javascript and d3 and <strong>no other libraries</strong>.</p><hr><h2 id="khôis-data-visualization-cookbook">Khôi&#39;s data visualization cookbook</h2><ol>
-<li>Basic visualization idea</li>
-<li>Find a suitable data source</li>
-<li>Prepare your data (this is important!)</li>
-<li>Visualize it!</li>
-</ol><p>Nice sources of data:</p><ul>
-<li><a href="https://opendata.swiss">https://opendata.swiss</a></li>
-<li><a href="https://data.opendatasoft.com">https://data.opendatasoft.com</a></li>
-<li><a href="https://github.com/awesomedata/awesome-public-datasets">https://github.com/awesomedata/awesome-public-datasets</a></li>
-</ul><hr><h2 id="step-1-basic-visualization-idea">Step 1: Basic visualization idea</h2><ol>
-<li>Current total cases in HTML list and table by canton<br>
-D3 as DOM manipulator</li>
-<li>Basic chart<br>
-D3 as SVG Helper</li>
-<li>Bubble chart<br>
-D3 as physics simulator</li>
-<li>On a colored map!<br>
-D3 as GeoJSON drawer</li>
-</ol><hr><h2 id="step-2-find-a-suitable-data-source">Step 2: Find a suitable data source</h2><p>Finding good, machine-readable, useable data is probably the most difficult task.</p><p>For our hacking course:</p><p><a href="https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv">https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv</a></p><hr><h2 id="step-3-prepare-your-data">Step 3: Prepare your data</h2><p>I&#39;ve never found any data sources without issues:</p><ul>
-<li>Missing data points</li>
-<li>Inconsistent data</li>
-<li>Encoding issues (UTF-8, ISO, etc.)</li>
-</ul><p>Common pitfalls for D3:</p><ul>
-<li>Loading data from CSV has no types - all data are strings.</li>
-<li>Use Javascript Date Objects</li>
-</ul><p><code>fetchCovidData()</code> fetches and transforms data. Let&#39;s have a look at it.</p><hr><h1 id="exercise-1-display-a-html-table">Exercise 1: Display a HTML Table</h1><p><img src="/exercise1.cd3594af.png" alt=""></p><hr><h2 id="our-data">Our data?!</h2><p>The first question: Is our data already in the right form for this visualization?</p><p>What would we have to change?</p><hr><h2 id="d3-data-grouping">D3 data grouping</h2><p><code>d3.nest()</code> can group and aggregate data.</p><pre><code class="language-javascript">  const groupByCanton = d3.nest()
+# browse to http://localhost:1234</code></pre><hr><h2 id="hands-up">Hands up</h2><p>Who ever worked with D3 yet?</p><p><img src="https://ahseeit.com//king-include/uploads/2019/10/69785157_480602692791661_4152319240238432258_n-7552999206.jpg" alt="fsdf"></p><hr><h2 id="whats-d3-in-a-nutshell">What&#39;s D3 in a nutshell?</h2><p>A pot-pourri of functions to help you all kind of stuffs.</p><p>I mean all kind of random stuffs, like lodash, jQuery, XMLHttpRequest, some math, physics simulation, animation... aaand last but not least some helpers for rendering on SVG and Canvas!</p><p>Also D3:</p><ul> <li>hard to read <a href="https://github.com/d3/d3/blob/master/API.md">API</a></li> <li>abysmal error reporting</li> <li>wrong expectations of users</li> </ul><p>... so let&#39;s pick at the top of the ice berg by hacking a <strong>D3 visualization app by ourselves</strong>! By only using javascript and d3 and <strong>no other libraries</strong>.</p><hr><h2 id="khôis-data-visualization-cookbook">Khôi&#39;s data visualization cookbook</h2><ol> <li>Basic visualization idea</li> <li>Find a suitable data source</li> <li>Prepare your data (this is important!)</li> <li>Visualize it!</li> </ol><p>Nice sources of data:</p><ul> <li><a href="https://opendata.swiss">https://opendata.swiss</a></li> <li><a href="https://data.opendatasoft.com">https://data.opendatasoft.com</a></li> <li><a href="https://github.com/awesomedata/awesome-public-datasets">https://github.com/awesomedata/awesome-public-datasets</a></li> </ul><hr><h2 id="step-1-basic-visualization-idea">Step 1: Basic visualization idea</h2><ol> <li>Current total cases in HTML list and table by canton<br> D3 as DOM manipulator</li> <li>Basic chart<br> D3 as SVG Helper</li> <li>Bubble chart<br> D3 as physics simulator</li> <li>On a colored map!<br> D3 as GeoJSON drawer</li> </ol><hr><h2 id="step-2-find-a-suitable-data-source">Step 2: Find a suitable data source</h2><p>Finding good, machine-readable, useable data is probably the most difficult task.</p><p>For our hacking course:</p><p><a href="https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv">https://github.com/daenuprobst/covid19-cases-switzerland/blob/master/covid_19_cases_switzerland_standard_format.csv</a></p><hr><h2 id="step-3-prepare-your-data">Step 3: Prepare your data</h2><p>I&#39;ve never found any data sources without issues:</p><ul> <li>Missing data points</li> <li>Inconsistent data</li> <li>Encoding issues (UTF-8, ISO, etc.)</li> </ul><p>Common pitfalls for D3:</p><ul> <li>Loading data from CSV has no types - all data are strings.</li> <li>Use Javascript Date Objects</li> </ul><p><code>fetchCovidData()</code> fetches and transforms data. Let&#39;s have a look at it.</p><hr><h1 id="exercise-1-display-a-html-table">Exercise 1: Display a HTML Table</h1><p><img src="/exercise1.cd3594af.png" alt=""></p><hr><h2 id="our-data">Our data?!</h2><p>The first question: Is our data already in the right form for this visualization?</p><p>What would we have to change?</p><hr><h2 id="d3-data-grouping">D3 data grouping</h2><p><code>d3.nest()</code> can group and aggregate data.</p><pre><code class="language-javascript">  const groupByCanton = d3.nest()
     .key(d =&gt; d.abbreviation_canton);
 
   const groupedData = groupByCanton.entries(data);
@@ -62,17 +32,7 @@ D3 as GeoJSON drawer</li>
     .call(tr =&gt; { // append &lt;td&gt; elements on &lt;tr&gt;
       tr.append(&#39;td&#39;).text(d =&gt; d.key);
       tr.append(&#39;td&#39;).text(d =&gt; d.value);
-  });</code></pre><hr><h2 id="colorize-your-data">Colorize your data</h2><p>This is a visualization workshop, so it has to be colorful!</p><p>... so let&#39;s learn about d3 scales!</p><hr><h2 id="d3-scales-glossary">D3 scales: Glossary</h2><ul>
-<li>Domain: Input values</li>
-<li>Range: Output values</li>
-</ul><hr><h2 id="d3-scales-mostly-used-scale-types">D3 scales: Mostly used scale types</h2><ul>
-<li><code>d3.scaleLinear()</code>: Continuous domain -&gt; continuous range. (value -&gt; screen x coordinate)</li>
-<li><code>d3.scaleLog()</code>: Continuous domain -&gt; logarithmic range (logarithmic charts)</li>
-<li><code>d3.scaleTime()</code>: Continuous domain (Javascript Dates) -&gt; continous range</li>
-<li><code>d3.scaleThreshold()</code>: Continous domain -&gt; discrete range (&lt; 200 : &#39;green&#39;, &gt; 200: &#39;yellow&#39;, &gt; 1000: &#39;red&#39;)</li>
-<li><code>d3.scaleQuantize()</code>: like threshold, but let d3 compute range (split domain to equal parts)</li>
-<li><code>d3.scaleQuantile()</code>: like threshold, but let d3 compute range (split domain according to data frequency)</li>
-</ul><hr><h2 id="d3-scales-create-our-scales">D3 scales: create our scales</h2><pre><code class="language-javascript">const linearColor = d3.scaleLinear()
+  });</code></pre><hr><h2 id="colorize-your-data">Colorize your data</h2><p>This is a visualization workshop, so it has to be colorful!</p><p>... so let&#39;s learn about d3 scales!</p><hr><h2 id="d3-scales-glossary">D3 scales: Glossary</h2><ul> <li>Domain: Input values</li> <li>Range: Output values</li> </ul><hr><h2 id="d3-scales-mostly-used-scale-types">D3 scales: Mostly used scale types</h2><ul> <li><code>d3.scaleLinear()</code>: Continuous domain -&gt; continuous range. (value -&gt; screen x coordinate)</li> <li><code>d3.scaleLog()</code>: Continuous domain -&gt; logarithmic range (logarithmic charts)</li> <li><code>d3.scaleTime()</code>: Continuous domain (Javascript Dates) -&gt; continous range</li> <li><code>d3.scaleThreshold()</code>: Continous domain -&gt; discrete range (&lt; 200 : &#39;green&#39;, &gt; 200: &#39;yellow&#39;, &gt; 1000: &#39;red&#39;)</li> <li><code>d3.scaleQuantize()</code>: like threshold, but let d3 compute range (split domain to equal parts)</li> <li><code>d3.scaleQuantile()</code>: like threshold, but let d3 compute range (split domain according to data frequency)</li> </ul><hr><h2 id="d3-scales-create-our-scales">D3 scales: create our scales</h2><pre><code class="language-javascript">const linearColor = d3.scaleLinear()
   .domain(d3.extent(totalCasesByCanton, d =&gt; d.value))
   .range([&#39;green&#39;, &#39;red&#39;]);
 // linearColor(2500) =&gt; &#39;#f00&#39;
@@ -117,10 +77,7 @@ const quantileColor = d3.scaleQuantile()
   .style(&#39;transform&#39;, &#39;translate(0,0)&#39;)
   .transition()
   .duration(2500)
-  .style(&#39;background-color&#39;, d =&gt; quantileColor(d.value)); // try out other scales!</code></pre><hr><h1 id="exercise-1-done-questions">Exercise 1 done: questions?</h1><hr><h1 id="exercise-2-a-simple-chart-using-d3">Exercise 2: A simple chart using D3</h1><p>I usually don&#39;t recommend drawing charts with D3, but when I do, I&#39;ll probably land in hell.</p><hr><h2 id="disclaimer">Disclaimer</h2><p>If you just need a simple chart, just use a library for that!</p><ul>
-<li>chart.js</li>
-<li>anychart</li>
-</ul><p>Don&#39;t do it with d3! But let&#39;s get on with that cold shower...</p><hr><h2 id="add-a-svg-element-to-our-document">Add a SVG element to our document</h2><pre><code class="language-javascript">  const chartElement = d3.select(&#39;main&#39;)
+  .style(&#39;background-color&#39;, d =&gt; quantileColor(d.value)); // try out other scales!</code></pre><hr><h1 id="exercise-1-done-questions">Exercise 1 done: questions?</h1><hr><h1 id="exercise-2-a-simple-chart-using-d3">Exercise 2: A simple chart using D3</h1><p>I usually don&#39;t recommend drawing charts with D3, but when I do, I&#39;ll probably land in hell.</p><hr><h2 id="disclaimer">Disclaimer</h2><p>If you just need a simple chart, just use a library for that!</p><ul> <li>chart.js</li> <li>anychart</li> </ul><p>Don&#39;t do it with d3! But let&#39;s get on with that cold shower...</p><hr><h2 id="add-a-svg-element-to-our-document">Add a SVG element to our document</h2><pre><code class="language-javascript">  const chartElement = d3.select(&#39;main&#39;)
     .append(&#39;svg&#39;)
     .attr(&#39;width&#39;, 960)
     .attr(&#39;height&#39;, 500)
