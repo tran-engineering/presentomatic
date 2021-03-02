@@ -3,8 +3,6 @@ import 'css-reset-and-normalize';
 import 'github-markdown-css';
 import 'highlight.js/scss/night-owl.scss';
 import '../styles/presentomatic.scss';
-
-
 import { EventEmitter } from 'events';
 import hljs from 'highlight.js';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -95,7 +93,7 @@ export default class Presentation extends EventEmitter {
     slide.selectAll('code')
       .nodes().forEach((el) => hljs.highlightBlock(el));
 
-    slide.selectAll<HTMLPreElement, any>('div.hljs')
+    slide.selectAll<any, any>('div.hljs')
       .on('click', (d, i, el) => navigator.clipboard.writeText(el[i].innerText));
 
     return slide.selectAll('div > *')
@@ -144,7 +142,7 @@ export default class Presentation extends EventEmitter {
       page,
       isTitleSlide: html.includes('<h1'),
       html: html.replace(/<pre>/g, '<div class="hljs">').replace(/<\/pre>/g, '</div>'),
-      title: html.match(/<h\d\s(.*?)>(.*?)<\/h\d>/)[2],
+      title: html.match(/<h\d\s(.*?)>(.*?)<\/h\d>/) ? html.match(/<h\d\s(.*?)>(.*?)<\/h\d>/)[2] : 'Presentomatic',
     }));
   }
 }
