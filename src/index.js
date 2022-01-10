@@ -1,5 +1,8 @@
+import Presentation from "./model/Presentation";
+import marked from "marked";
 
-import Presentation from './model/Presentation';
-import html from '../PRESENTATION.md';
-
-const p = new Presentation(html);
+(async () => {
+  const md = await (await fetch("PRESENTATION.md")).text();
+  const html = marked.parse(md);
+  new Presentation(html);
+})();
