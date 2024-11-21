@@ -29,4 +29,4 @@ flowchart TD
 
 ## A picture
 
-![cat](keynote_cat)
+![cat](keynote_cat.png)
