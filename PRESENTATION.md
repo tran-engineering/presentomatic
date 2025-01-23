@@ -39,6 +39,15 @@ https://tran-engineering.github.io/corix-frontend/
 
 ---
 
+## Disclaimers
+
+The code is by no means a complete or even recommended solution.
+
+It is a proof-of-concept to make it easier to understand and think about
+the challenges and to facilitate writing requirements.
+
+---
+
 # Introductions
 
 ---
@@ -176,16 +185,37 @@ But it can be engineered to do so.
 
 - Spring Boot
 - REST
+- Single Value Update
 
 ---
 
 ## Frontend
 
 - Angular
+- Live Policy Checking
 
 ---
 
 # Hands-On: Try to checkout and run the front- and backend
+
+---
+
+## Clone repository
+
+Requirements: Java 21, Node 22
+
+```bash
+git clone https://github.com/tran-engineering/corix-backend.git
+cd corix-backend
+./gradlew bootRun
+```
+
+
+```bash
+git clone https://github.com/tran-engineering/corix-frontend.git
+cd corix-frontend
+npm start
+```
 
 ---
 
