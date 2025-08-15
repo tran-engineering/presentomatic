@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
-
-import mdPlugin from "vite-plugin-markdown";
+import { analyzer } from 'vite-bundle-analyzer'
 
 const reloader = () => ({
   name: "custom-hmr",
@@ -19,6 +18,6 @@ const reloader = () => ({
 });
 
 export default defineConfig({
-  plugins: [mdPlugin(), reloader()],
+  plugins: [mdPlugin(), reloader(), analyzer()],
   base: ''
 });

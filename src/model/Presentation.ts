@@ -1,18 +1,12 @@
 import "css-reset-and-normalize";
-import "github-markdown-css";
+import "github-markdown-css/github-markdown-light.css";
 import "highlight.js/scss/night-owl.scss";
 import "../styles/presentomatic.scss";
 import { EventEmitter } from "events";
 import hljs from "highlight.js";
-import javascript from "highlight.js/lib/languages/javascript";
-import json from "highlight.js/lib/languages/json";
 import * as d3 from "d3";
 import mermaid from 'mermaid';
 mermaid.initialize({ startOnLoad: false });
-
-
-hljs.registerLanguage("javascript", javascript);
-hljs.registerLanguage("json", json);
 
 interface Slide {
   page: number;
