@@ -15,7 +15,10 @@ main {
 
   background-color: $normal-slide-bg;
 
-  transition: all 600ms;
+  &.animations {
+    transition: all 600ms;
+  }
+  
 
   &.title-slide {
     background-color: $title-slide-bg;

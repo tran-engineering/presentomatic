@@ -22,17 +22,22 @@ export default class Presentation extends EventEmitter {
 
   private slideSelection: d3.Selection<HTMLDivElement, Slide, any, any>;
 
+  private animations: boolean = true;
+
   constructor(html: string) {
     super();
+    this.animations = !window.location.search.includes("no-animations");
+    d3.select("main")
+      .classed("animations", this.animations);
     this.slides = Presentation.htmlToSlides(html);
-    console.log(this.slides);
     this.initControls();
     const start = parseInt(window.location.hash.replace("#", ""), 10);
     this.showSlide(Number.isNaN(start) ? 0 : start);
     d3.select("nav")
-      .on("mouseenter", () => Presentation.fadeInNav())
+      .style("display", this.animations ? undefined : "none")
+      .on("mouseenter", () => this.fadeInNav())
       .on("mouseleave", () => {
-        Presentation.fadeOutNav();
+        this.fadeOutNav();
       });
   }
 
@@ -48,25 +53,27 @@ export default class Presentation extends EventEmitter {
           .on("click", (ev, d) => this.showSlide(d.page))
       )
       .classed("selected", (d) => this.currentSlide === d);
-    Presentation.fadeInNav();
-    Presentation.fadeOutNav();
+    this.fadeInNav();
+    this.fadeOutNav();
   }
 
-  static fadeInNav() {
+  fadeInNav() {
     d3.select("nav")
       .selectAll("div")
       .interrupt("fadeout")
       .transition()
+      .duration(this.animations ? 600 : 0)
       .style("transform", undefined)
       .style("opacity", 1);
   }
 
-  static fadeOutNav() {
+  fadeOutNav() {
     d3.select("nav")
       .selectAll("div")
       .interrupt("fadeout")
       .transition("fadeout")
-      .delay(3000)
+      .duration(this.animations ? 600 : 0)
+      .delay(this.animations ? 3000 : 0)
       .style("transform", "scale(0.1)rotate(-90deg)")
       .style("opacity", 0);
   }
@@ -90,14 +97,14 @@ export default class Presentation extends EventEmitter {
             .classed("title-slide", (d) => d.isTitleSlide)
             .html((d) => d.html),
         (update) => update,
-        (remove) => remove.call(Presentation.fadeOutSlide)
+        (remove) => remove.call((s) => this.fadeOutSlide(s))
       )
-      .call(Presentation.fadeInSlide);
+      .call((slide) => this.fadeInSlide(slide));
     this.emit("slideChanged", index);
     d3.select("title").text(this.currentSlide.title);
   }
 
-  static fadeInSlide(slide: d3.Selection<HTMLDivElement, Slide, any, any>) {
+  fadeInSlide(slide: d3.Selection<HTMLDivElement, Slide, any, any>) {
     slide
       .selectAll<HTMLDivElement, Slide>("code")
       .nodes()
@@ -115,9 +122,9 @@ export default class Presentation extends EventEmitter {
       .style("transform", "rotate(-5deg)")
       .interrupt()
       .transition()
-      .duration(600)
+      .duration(this.animations ? 600 : 0)
       .ease(d3.easeBackOut)
-      .delay((d, i) => 300 + i * 100)
+      .delay((d, i) => this.animations ? 300 + i * 100 : 0)
       .style("transform", undefined)
       .style("opacity", undefined)
       .call(() => {
@@ -125,19 +132,20 @@ export default class Presentation extends EventEmitter {
       });
   }
 
-  static fadeOutSlide(slide: d3.Selection<HTMLDivElement, Slide, any, any>) {
+
+  fadeOutSlide(slide: d3.Selection<HTMLDivElement, Slide, any, any>) {
     return slide
       .selectAll("div > *")
       .interrupt()
       .transition()
-      .duration(600)
+      .duration(this.animations ? 600 : 0)
       .ease(d3.easeBackInOut)
-      .delay((d, i) => i * 100)
+      .delay((d, i) => this.animations ? i * 100 : 1)
       .style("transform", "translate(40px,-10px)")
       .style("opacity", 0)
       .end()
       .then(() => slide.remove())
-      .catch(() => {});
+      .catch(() => { });
   }
 
   initControls(): void {

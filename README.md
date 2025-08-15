@@ -6,3 +6,6 @@ Markdown presentations made simple
 
 `npm i -g presentomatic`
 
+## Help
+
+`presentomatic --help`
