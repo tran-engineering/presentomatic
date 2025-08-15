@@ -59,6 +59,7 @@ program
 
 program
   .command('build')
+  .description('Build static html for the presentation')
   .option('-o, --output <dir>', 'Output directory for the built files', 'dist')
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
   .action(async (args, options) => {
