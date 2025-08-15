@@ -67,7 +67,7 @@ program
 
 program
   .command('pdf')
-  .description('Serve the presentation')
+  .description('Save presentation to a PDF')
   .option('-p, --port <port>', 'Port to run the server on', '1337')
   .option('-o, --output <file>', 'Output file for the PDF', 'PRESENTATION.pdf')
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
