@@ -39,7 +39,8 @@ function viteConfig(arg, options) {
     build: {
       outDir: options.output ? resolve(options.output) : undefined,
     },
-    plugins: [reloader()]
+    plugins: [reloader()],
+    base: '',
   });
 };
 
