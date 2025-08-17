@@ -1,0 +1,112 @@
+#!/usr/bin/env node
+
+import { fileURLToPath } from 'node:url'
+import { createServer, build, defineConfig } from 'vite'
+import { program } from 'commander';
+import { resolve } from 'node:path';
+import puppeteer from 'puppeteer';
+import fs from 'node:fs/promises';
+import path from 'path';
+import pdflib from 'pdf-lib';
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url))
+
+const reloader = () => ({
+  name: "custom-hmr",
+  enforce: "post",
+  // HMR
+  handleHotUpdate({ file, server }) {
+    if (file.endsWith(".md")) {
+      console.log("Hot reload: Markdown changed!");
+
+      server.ws.send({
+        type: "full-reload",
+        path: "*",
+      });
+    }
+  },
+});
+
+function viteConfig(arg, options) {
+  console.log(resolve(arg))
+  return defineConfig({
+    configFile: false,
+    root: __dirname,
+    server: {
+      port: options.port,
+    },
+    publicDir: resolve(arg),
+    build: {
+      outDir: options.output ? resolve(options.output) : undefined,
+    },
+    plugins: [reloader()],
+    base: '',
+  });
+};
+
+
+program
+  .command('serve')
+  .description('Serve the presentation')
+  .option('-p, --port <port>', 'Port to run the server on', '1337')
+  .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
+  .action(async (arg, options) => {
+
+    const server = await createServer(viteConfig(arg, options));
+    await server.listen();
+
+    server.printUrls();
+  });
+
+program
+  .command('build')
+  .description('Build static html for the presentation')
+  .option('-o, --output <dir>', 'Output directory for the built files', 'dist')
+  .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
+  .action(async (args, options) => {
+    await build(viteConfig(args, options));
+  });
+
+program
+  .command('pdf')
+  .description('Save presentation to a PDF')
+  .option('-p, --port <port>', 'Port to run the server on', '1337')
+  .option('-o, --output <file>', 'Output file for the PDF', 'PRESENTATION.pdf')
+  .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
+  .action(async (arg, options) => {
+
+    const server = await createServer(viteConfig(arg, options));
+    await server.listen();
+
+    console.log(`Server is running on port: ${server.resolvedUrls.local[0]}`);
+    const url = `${server.resolvedUrls.local[0]}?no-animations#0`;
+    console.log(url, path.join(arg, 'PRESENTATION.md'));
+    const countPages = (await fs.readFile(path.join(arg, 'PRESENTATION.md'), 'utf-8')).match(/---/g || []).length + 1;
+    console.log(`Total pages: ${countPages}`);
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    const pdfDoc = await pdflib.PDFDocument.create();
+    for (let i = 0; i < countPages; i++) {
+      await page.goto(url);
+      console.log(`Generating PDF for page ${i + 1}...`);
+      await delay(300); // Wait for the page to load
+      const pdfBytes = await page.pdf({ format: 'A4', landscape: true, printBackground: true });
+      const pdfPage = await pdflib.PDFDocument.load(pdfBytes);
+      const [p] = await pdfDoc.copyPages(pdfPage, [0]);
+      pdfDoc.addPage(p);
+      await page.keyboard.down('ArrowRight');
+    }
+    const pdfBytes = await pdfDoc.save();
+    await fs.writeFile(options.output, pdfBytes);
+    console.log(`PDF saved to ${options.output}!`);
+    await browser.close();
+    await server.close();
+  });
+
+program.parse();
+
+function delay(time) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, time)
+  });
+}
