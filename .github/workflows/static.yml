@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy a Presentomatic slide show to GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -35,8 +35,8 @@ jobs:
         uses: actions/setup-node@v3.9.1
       - name: Install Presentomatic
         run: npm i presentomatic
-      - name: Build static HTML from presentation
-        run: npx presentomatic build public
+      - name: Build static HTML from the directory example-presentation (replace this with the path to your presentation directory)
+        run: npx presentomatic build example-presentation
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
