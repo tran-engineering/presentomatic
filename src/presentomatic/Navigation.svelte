@@ -35,8 +35,6 @@
         }, 3000);
     }
 
-    $: console.log(visible);
-
     function keydown(ev: KeyboardEvent) {
         switch (ev.code) {
             case "ArrowLeft": {

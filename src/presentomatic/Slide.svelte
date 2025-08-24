@@ -10,10 +10,6 @@
     export let disableAnimations = false;
     let slideContainer;
 
-    onMount(async () => {
-        console.log(slide.html);
-    });
-
     afterUpdate(() => {
         document
             .querySelectorAll("code")
