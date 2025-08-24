@@ -8,6 +8,7 @@ import puppeteer from 'puppeteer';
 import fs from 'node:fs/promises';
 import path from 'path';
 import pdflib from 'pdf-lib';
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
@@ -39,7 +40,9 @@ function viteConfig(arg, options) {
     build: {
       outDir: options.output ? resolve(options.output) : undefined,
     },
-    plugins: [reloader()],
+    plugins: [
+      reloader(), svelte()
+    ],
     base: '',
   });
 };
@@ -79,23 +82,26 @@ program
     await server.listen();
 
     console.log(`Server is running on port: ${server.resolvedUrls.local[0]}`);
-    const url = `${server.resolvedUrls.local[0]}?no-animations#0`;
-    console.log(url, path.join(arg, 'PRESENTATION.md'));
     const countPages = (await fs.readFile(path.join(arg, 'PRESENTATION.md'), 'utf-8')).match(/---/g || []).length + 1;
     console.log(`Total pages: ${countPages}`);
+    const urls = [];
+    for (let i = 0; i < countPages; i++) {
+      urls.push(`${server.resolvedUrls.local[0]}?no-animations#${i+1}`)
+    }
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     const pdfDoc = await pdflib.PDFDocument.create();
-    for (let i = 0; i < countPages; i++) {
+
+    for (const url of urls) {
+      console.log(`Goto ${url}`);
       await page.goto(url);
-      console.log(`Generating PDF for page ${i + 1}...`);
       await delay(300); // Wait for the page to load
       const pdfBytes = await page.pdf({ format: 'A4', landscape: true, printBackground: true });
       const pdfPage = await pdflib.PDFDocument.load(pdfBytes);
       const [p] = await pdfDoc.copyPages(pdfPage, [0]);
       pdfDoc.addPage(p);
-      await page.keyboard.down('ArrowRight');
     }
+
     const pdfBytes = await pdfDoc.save();
     await fs.writeFile(options.output, pdfBytes);
     console.log(`PDF saved to ${options.output}!`);
