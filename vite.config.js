@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { analyzer } from 'vite-bundle-analyzer'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 const reloader = () => ({
   name: "custom-hmr",
@@ -20,7 +21,7 @@ const reloader = () => ({
 export default defineConfig({
   plugins: [
     reloader(), 
-  //  analyzer()
+    svelte(),
   ],
   base: ''
 });

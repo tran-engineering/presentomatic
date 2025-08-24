@@ -8,6 +8,7 @@ import puppeteer from 'puppeteer';
 import fs from 'node:fs/promises';
 import path from 'path';
 import pdflib from 'pdf-lib';
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
@@ -39,7 +40,9 @@ function viteConfig(arg, options) {
     build: {
       outDir: options.output ? resolve(options.output) : undefined,
     },
-    plugins: [reloader()],
+    plugins: [
+      reloader(), svelte()
+    ],
     base: '',
   });
 };
