@@ -1,5 +1,7 @@
 # Header 1 slides are centered
 
+Khôi Tran
+
 ---
 
 ## Some Code

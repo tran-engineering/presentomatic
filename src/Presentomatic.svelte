@@ -10,7 +10,7 @@
     const FILE = "PRESENTATION.md";
     let currentSlide: Slide | undefined;
     let hash = window.location.hash;
-    let disableAnimations = false;
+    let disableAnimations = window.location.search.includes("no-animations");
     let slides: Slide[] = [];
     let listener;
 
@@ -54,17 +54,6 @@
     main {
         font-size: 200% !important;
         overflow: hidden;
-
-        background-color: var(--normal-slide-bg);
-
-        &.animations {
-            transition: all 600ms;
-        }
-
-        &.title-slide {
-            background-color: var(--title-slide-bg);
-            color: var(--title-slide-fg);
-        }
 
         > div {
             position: fixed;
