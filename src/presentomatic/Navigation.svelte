@@ -1,11 +1,12 @@
 <script lang="ts">
+    import type { Slide } from "../util/MarkdownParser";
     import * as d3 from "d3";
-    export let slides: Slide[] = [];
-    export let currentSlide: Slide | undefined;
+
+    const { slides, currentSlide } = $props();
 
     let visible = false;
     let fadeOutRef = undefined;
-    let navElement: HTMLNavElement;
+    let navElement: HTMLElement;
 
     function fadeIn() {
         if (fadeOutRef) {
@@ -83,7 +84,7 @@
 <div role="region" class="nav-area" on:mousemove={fadeIn}></div>
 
 <nav bind:this={navElement}>
-    {#each slides as slide, index}
+    {#each slides as slide, index (index)}
         <button
             class:title-slide={slide.isTitleSlide}
             class:selected={currentSlide === slide}

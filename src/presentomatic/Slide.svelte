@@ -1,17 +1,13 @@
 <script lang="ts">
-    import type { Slide } from "../util/MarkdownParser";
-
     import hljs from "highlight.js";
     import mermaid from "mermaid";
     import * as d3 from "d3";
 
-    import { onMount, onDestroy, afterUpdate } from "svelte";
+    const {slide, disableAnimations} = $props();
 
-    export let slide: Slide;
-    export let disableAnimations = false;
     let slideContainer;
 
-    afterUpdate(() => {
+    $effect(() => {
         document
             .querySelectorAll("code")
             .forEach((el) => hljs.highlightElement(el));
@@ -42,6 +38,7 @@
     class:title-slide={slide?.isTitleSlide}
     data-disable-animations={disableAnimations}
 >
+    <!-- eslint-disable -->
     {@html slide?.html}
 </div>
 

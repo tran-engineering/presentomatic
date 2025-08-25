@@ -9,7 +9,7 @@ export interface Slide {
 
 export class MarkdownParser {
 
-    static async mdToSlides(md:string) {
+    static async mdToSlides(md:string): Promise<Slide[]> {
         return this.htmlToSlides(await this.mdToHtml(md));
     }
 

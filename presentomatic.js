@@ -82,7 +82,7 @@ program
     await server.listen();
 
     console.log(`Server is running on port: ${server.resolvedUrls.local[0]}`);
-    const countPages = (await fs.readFile(path.join(arg, 'PRESENTATION.md'), 'utf-8')).match(/---/g || []).length + 1;
+    const countPages = ((await fs.readFile(path.join(arg, 'PRESENTATION.md'), 'utf-8')).match(/---/g) || []).length + 1;
     console.log(`Total pages: ${countPages}`);
     const urls = [];
     for (let i = 0; i < countPages; i++) {

@@ -6,7 +6,7 @@ export default {
     // for more information about preprocessors
     preprocess: vitePreprocess(),
     onwarn: (warning, handler) => {
-        const { code, frame } = warning;
+        const { code } = warning;
         // console.log(code); // <= uncomment to check other warnings
         if (code === "css_unused_selector")
             return;

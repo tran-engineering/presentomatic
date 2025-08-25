@@ -3,16 +3,17 @@
     import "./styles/presentomatic.scss";
     import "github-markdown-css/github-markdown-light.css";
     import "highlight.js/scss/night-owl.scss";
-    import { onMount, onDestroy } from "svelte";
+    import { onMount } from "svelte";
+
     import { MarkdownParser } from "./util/MarkdownParser";
     import Slide from "./presentomatic/Slide.svelte";
+    import { type Slide as SlideType } from "./util/MarkdownParser";
     import Navigation from "./presentomatic/Navigation.svelte";
+
     const FILE = "PRESENTATION.md";
-    let currentSlide: Slide | undefined;
-    let hash = window.location.hash;
+    let currentSlide: SlideType | undefined;
     let disableAnimations = window.location.search.includes("no-animations");
-    let slides: Slide[] = [];
-    let listener;
+    let slides: SlideType[] = [];
 
     onMount(async () => {
         const md = await (await fetch(FILE)).text();
