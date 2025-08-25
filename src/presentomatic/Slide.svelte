@@ -3,18 +3,18 @@
     import mermaid from "mermaid";
     import * as d3 from "d3";
 
-    const {slide, disableAnimations} = $props();
+    let {slide, disableAnimations} = $props();
 
     let slideContainer;
 
     $effect(() => {
+        console.log('Slide has changed', slide); // needed to make a dependency to slide
         document
             .querySelectorAll("code")
             .forEach((el) => hljs.highlightElement(el));
 
         document.querySelectorAll("div.hljs").forEach((el: HTMLDivElement) => el.addEventListener("click", () => {
             navigator.clipboard.writeText(el.innerText);
-            console.log(el)
         }));
 
         d3.select(slideContainer)
