@@ -81,14 +81,14 @@
 
 <svelte:window on:keydown={keydown} />
 
-<div role="region" class="nav-area" on:mousemove={fadeIn}></div>
+<div role="region" class="nav-area" onmousemove={fadeIn}></div>
 
 <nav bind:this={navElement}>
     {#each slides as slide, index (index)}
         <button
             class:title-slide={slide.isTitleSlide}
             class:selected={currentSlide === slide}
-            on:click={() => (window.location.hash = `#${index + 1}`)}
+            onclick={() => (window.location.hash = `#${index + 1}`)}
         >
             {index + 1}
         </button>

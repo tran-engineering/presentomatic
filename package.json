@@ -2,11 +2,11 @@
   "name": "presentomatic",
   "version": "2.1.0",
   "description": "Simple presentations using markdown",
-  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "vite",
-    "build": "vite build"
+    "start": "node presentomatic.js serve example-presentation",
+    "build": "node presentomatic.js build example-presentation",
+    "pdf": "node presentomatic.js pdf example-presentation"
   },
   "bin": {
     "presentomatic": "presentomatic.js"
