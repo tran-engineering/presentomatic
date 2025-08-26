@@ -39,6 +39,7 @@ async function viteConfig(arg, options) {
     root: __dirname,
     server: {
       port: options.port,
+      host: true,
     },
     publicDir: resolve(arg),
     build: {
