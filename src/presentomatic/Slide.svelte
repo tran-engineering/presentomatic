@@ -106,10 +106,11 @@
         }
 
         :global(img) {
-            max-width: 60vmin;
-            max-height: 60vmin;
+            width: 100%;
+            max-height: 60vh;
             display: block;
             margin: 0 auto;
+            object-fit: contain;
         }
     }
 </style>

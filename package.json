@@ -1,6 +1,6 @@
 {
   "name": "presentomatic",
-  "version": "2.1.0",
+  "version": "2.2.4",
   "description": "Simple presentations using markdown",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -45,7 +45,6 @@
     "marked": "^16.1.2",
     "mermaid": "^11.4.0",
     "pdf-lib": "^1.17.1",
-    "presentomatic": "^1.0.0",
     "puppeteer": "^24.16.2",
     "sass-embedded": "^1.90.0",
     "svelte": "^5.38.1",

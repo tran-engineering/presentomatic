@@ -29,7 +29,6 @@ const reloader = () => ({
 });
 
 function viteConfig(arg, options) {
-  console.log(resolve(arg))
   return defineConfig({
     configFile: false,
     root: __dirname,
@@ -41,7 +40,7 @@ function viteConfig(arg, options) {
       outDir: options.output ? resolve(options.output) : undefined,
     },
     plugins: [
-      reloader(), svelte()
+      svelte(), reloader()
     ],
     base: '',
   });
