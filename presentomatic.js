@@ -28,7 +28,12 @@ const reloader = () => ({
   },
 });
 
-function viteConfig(arg, options) {
+async function viteConfig(arg, options) {
+  const dir = resolve(arg);
+  const markdownFiles = (await fs.readdir(dir)).filter(file => file.endsWith(".md"));
+  if (markdownFiles.length === 0) {
+    throw new Error("No markdown files found");
+  }
   return defineConfig({
     configFile: false,
     root: __dirname,
@@ -43,6 +48,9 @@ function viteConfig(arg, options) {
       svelte(), reloader()
     ],
     base: '',
+    define: {
+      VITE_MARKDOWN_FILES: JSON.stringify(markdownFiles),
+    }
   });
 };
 
@@ -54,7 +62,7 @@ program
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
   .action(async (arg, options) => {
 
-    const server = await createServer(viteConfig(arg, options));
+    const server = await createServer(await viteConfig(arg, options));
     await server.listen();
 
     server.printUrls();
@@ -66,7 +74,7 @@ program
   .option('-o, --output <dir>', 'Output directory for the built files', 'dist')
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
   .action(async (args, options) => {
-    await build(viteConfig(args, options));
+    await build(await viteConfig(args, options));
   });
 
 program
@@ -77,7 +85,7 @@ program
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
   .action(async (arg, options) => {
 
-    const server = await createServer(viteConfig(arg, options));
+    const server = await createServer(await viteConfig(arg, options));
     await server.listen();
 
     console.log(`Server is running on port: ${server.resolvedUrls.local[0]}`);
