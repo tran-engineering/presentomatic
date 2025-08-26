@@ -40,6 +40,10 @@
 
 <svelte:window on:hashchange={handleHashChange}></svelte:window>
 
+<svelte:head>
+	<title>🖵 {currentSlide?.title}</title>
+</svelte:head>
+
 <main
     class="markdown-body"
     class:title-slide={currentSlide?.isTitleSlide === true}
