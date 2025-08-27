@@ -9,6 +9,7 @@
     import Slide from "./presentomatic/Slide.svelte";
     import { type Slide as SlideType } from "./util/MarkdownParser";
     import Navigation from "./presentomatic/Navigation.svelte";
+    import Laserpointer from "./presentomatic/Laserpointer.svelte";
 
     const searchParams = new URLSearchParams(window.location.search);
     const file = searchParams.get('f') || window.MARKDOWN_FILES[0];
@@ -74,4 +75,5 @@
         />
     {/if}
 </main>
+<Laserpointer />
 <Navigation {slides} {currentSlide} {disableAnimations} currentFile={file} files={window.MARKDOWN_FILES} />
