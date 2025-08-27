@@ -1,17 +1,27 @@
 {
   "name": "presentomatic",
-  "version": "2.5.0",
+  "version": "2.5.2",
   "description": "Simple presentations using markdown",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node presentomatic.js serve example-presentation",
+    "start": "PRESENTOMATIC_DEV=true node presentomatic.js serve example-presentation",
+    "start:prod": "node presentomatic.js serve example-presentation",
     "build": "node presentomatic.js build example-presentation",
-    "pdf": "node presentomatic.js pdf example-presentation"
+    "pdf": "node presentomatic.js pdf example-presentation",
+    "build:app": "vite build",
+    "prepack": "npm run build:app"
   },
   "bin": {
     "presentomatic": "presentomatic.js"
   },
   "type": "module",
+  "files": [
+    "dist-app/",
+    "presentomatic.js",
+    "svelte.config.js",
+    "LICENSE",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tran-engineering/presentomatic.git"

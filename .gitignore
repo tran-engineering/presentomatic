@@ -1,5 +1,6 @@
 # output
 /lib
+/dist-app
 
 # Logs
 logs
