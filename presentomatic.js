@@ -96,7 +96,13 @@ program
     for (let i = 0; i < countPages; i++) {
       urls.push(`${server.resolvedUrls.local[0]}?no-animations#${i+1}`)
     }
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+      ]
+    });
     const page = await browser.newPage();
     const pdfDoc = await pdflib.PDFDocument.create();
 
