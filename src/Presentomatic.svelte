@@ -35,6 +35,19 @@
         }
     }
 
+    function nextSlide() {
+        navigate(getSlideNum(currentSlide) + 1);
+    }
+
+    function previousSlide() {
+        navigate(getSlideNum(currentSlide) - 1);
+    }
+
+    function getSlideNum(slide: SlideType | undefined) {
+        if (!slide) return 0;
+        return slides.indexOf(slide) + 1;
+    }
+
     function handleHashChange() {
         const requestedPage = parseInt(window.location.hash.replace("#", ""));
         navigate(requestedPage);
@@ -53,7 +66,12 @@
     class:animations={!disableAnimations}
 >
     {#if currentSlide}
-        <Slide slide={currentSlide} {disableAnimations} />
+        <Slide 
+        slide={currentSlide} 
+        {disableAnimations} 
+        nextSlide={() => nextSlide()} 
+        previousSlide={() => previousSlide()}
+        />
     {/if}
 </main>
-<Navigation {slides} {currentSlide} {disableAnimations} />
+<Navigation {slides} {currentSlide} {disableAnimations} currentFile={file} files={window.MARKDOWN_FILES} />

@@ -1,8 +1,7 @@
 <script lang="ts">
-    import type { Slide } from "../util/MarkdownParser";
     import * as d3 from "d3";
 
-    const { slides, currentSlide, disableAnimations } = $props();
+    const { slides, currentSlide, disableAnimations, currentFile, files } = $props();
 
     let visible = false;
     let fadeOutRef = undefined;
@@ -25,6 +24,7 @@
                 .style("opacity", 1);
 
             d3.select(fileContainer)
+                .selectAll("*")
                 .style("opacity", "0")
                 .transition("filefader")
                 .duration(200)
@@ -42,6 +42,7 @@
                 .style("opacity", 0)
                 .style("transform", "rotate(20deg)");
             d3.select(fileContainer)
+                .selectAll("*")
                 .transition("filefader")
                 .duration(200)
                 .style("opacity", 0);
@@ -50,21 +51,6 @@
 
     function keydown(ev: KeyboardEvent) {
         switch (ev.code) {
-            case "ArrowLeft": {
-                // Navigate to previous slide
-                const nextSlideNum = getSlideNum(currentSlide) - 1;
-                navigateTo(nextSlideNum);
-                fadeIn();
-                break;
-            }
-            case "ArrowRight": {
-                // Navigate to next slide
-                const nextSlideNum = getSlideNum(currentSlide) + 1;
-                navigateTo(nextSlideNum);
-                fadeIn();
-                break;
-            }
-
             case "Home": {
                 navigateTo(1);
                 fadeIn();
@@ -81,13 +67,31 @@
         }
     }
 
-    function getSlideNum(slide: Slide) {
-        return slides.indexOf(slide) + 1;
-    }
-
     function navigateTo(slideNum: number) {
         const realSlideNum = Math.min(Math.max(slideNum, 1), slides.length);
         window.location.hash = `#${realSlideNum}`;
+    }
+
+    function previousFile() {
+        const currentIndex = files.indexOf(currentFile);
+        const previousIndex =
+            (currentIndex - 1 + files.length) % files.length;
+        const previousFile = files[previousIndex];
+        openFile(previousFile);
+    }
+
+    function nextFile() {
+        const currentIndex = files.indexOf(currentFile);
+        const nextIndex = (currentIndex + 1) % files.length;
+        const nextFile = files[nextIndex];
+        openFile(nextFile);
+    }
+
+    function openFile(file) {
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("f", file);
+        window.location.hash = "";
+        window.location.search = searchParams.toString();
     }
 </script>
 
@@ -98,11 +102,9 @@
 <nav>
     {#if window.MARKDOWN_FILES.length > 1}
         <div bind:this={fileContainer} class="files">
-            <ol>
-                {#each window.MARKDOWN_FILES as file (file)}
-                    <li>{file}</li>
-                {/each}
-            </ol>
+            <button class="title-slide" onclick={() => previousFile()}>Previous</button>
+            <button>{currentFile}</button>
+            <button class="title-slide" onclick={() => nextFile()}>Next</button>
         </div>
     {/if}
     <div class="slides" bind:this={slideContainer}>
