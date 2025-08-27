@@ -10,13 +10,16 @@
     import { type Slide as SlideType } from "./util/MarkdownParser";
     import Navigation from "./presentomatic/Navigation.svelte";
 
-    const FILE = "PRESENTATION.md";
+    const searchParams = new URLSearchParams(window.location.search);
+    const file = searchParams.get('f') || window.MARKDOWN_FILES[0];
+    let disableAnimations = searchParams.get('no-animations') !== null;
+    
     let currentSlide: SlideType | undefined;
-    let disableAnimations = window.location.search.includes("no-animations");
+    
     let slides: SlideType[] = [];
 
     onMount(async () => {
-        const md = await (await fetch(FILE)).text();
+        const md = await (await fetch(file)).text();
         slides = await MarkdownParser.mdToSlides(md);
         currentSlide = slides[0];
         const requestedPage = parseInt(window.location.hash.replace("#", ""));

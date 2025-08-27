@@ -6,7 +6,8 @@
 
     let visible = false;
     let fadeOutRef = undefined;
-    let navElement: HTMLElement;
+    let slideContainer: HTMLElement;
+    let fileContainer: HTMLElement;
 
     function fadeIn() {
         if (disableAnimations) return;
@@ -14,7 +15,7 @@
             clearTimeout(fadeOutRef);
         }
         if (!visible) {
-            d3.select(navElement)
+            d3.select(slideContainer)
                 .selectAll("button")
                 .style("transform", "rotate(20deg)")
                 .transition("fader")
@@ -23,17 +24,27 @@
                 .delay((_, i) => i * 10)
                 .style("opacity", 1);
 
+            d3.select(fileContainer)
+                .style("opacity", "0")
+                .transition("filefader")
+                .duration(200)
+                .style("opacity", 1);
+
             visible = true;
         }
         fadeOutRef = setTimeout(() => {
             visible = false;
-            d3.select(navElement)
+            d3.select(slideContainer)
                 .selectAll("button")
                 .transition("fader")
                 .delay((_, i) => i * 10)
                 .duration(200)
                 .style("opacity", 0)
                 .style("transform", "rotate(20deg)");
+            d3.select(fileContainer)
+                .transition("filefader")
+                .duration(200)
+                .style("opacity", 0);
         }, 3000);
     }
 
@@ -84,14 +95,25 @@
 
 <div role="region" class="nav-area" onmousemove={fadeIn}></div>
 
-<nav bind:this={navElement}>
-    {#each slides as slide, index (index)}
-        <button
-            class:title-slide={slide.isTitleSlide}
-            class:selected={currentSlide === slide}
-            onclick={() => (window.location.hash = `#${index + 1}`)}
-        >
-            {index + 1}
-        </button>
-    {/each}
+<nav>
+    {#if window.MARKDOWN_FILES.length > 1}
+        <div bind:this={fileContainer} class="files">
+            <ol>
+                {#each window.MARKDOWN_FILES as file (file)}
+                    <li>{file}</li>
+                {/each}
+            </ol>
+        </div>
+    {/if}
+    <div class="slides" bind:this={slideContainer}>
+        {#each slides as slide, index (index)}
+            <button
+                class:title-slide={slide.isTitleSlide}
+                class:selected={currentSlide === slide}
+                onclick={() => (window.location.hash = `#${index + 1}`)}
+            >
+                {index + 1}
+            </button>
+        {/each}
+    </div>
 </nav>
