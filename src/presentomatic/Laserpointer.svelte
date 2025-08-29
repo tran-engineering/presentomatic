@@ -19,9 +19,7 @@
         .range([color("rgba(255, 0, 0, 1)"), color("rgba(255, 255, 0, 0)")])
         .clamp(true);
 
-    const thicknessScaler = scaleLinear()
-        .domain([300, 0])
-        .clamp(true);
+    const thicknessScaler = scaleLinear().domain([300, 0]).clamp(true);
 
     function keydown(ev: KeyboardEvent) {
         // console.log(ev);
@@ -50,7 +48,7 @@
         if (!lasering || !canvas) return;
 
         counter++;
-        if (counter % 2 !== 0) {
+        if (counter % 3 !== 0) {
             return;
         }
 
@@ -68,7 +66,10 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        thicknessScaler.range([Math.min(canvas.width, canvas.height) * 0.01, Math.min(canvas.width, canvas.height) * 0.02]);
+        thicknessScaler.range([
+            Math.min(canvas.width, canvas.height) * 0.011,
+            Math.min(canvas.width, canvas.height) * 0.001,
+        ]);
     }
 
     onMount(() => {
@@ -107,17 +108,15 @@
         // Set a start-point
         ctx.moveTo(points[0].x, points[0].y);
         ctx.strokeStyle = "rgba(255,0,0,1)";
-
-        for (let i = 1; i < points.length; i++) {
         ctx.beginPath();
+        for (let i = 1; i < points.length; i++) {
             const ttl = points[i].despawnTime - now;
             ctx.lineWidth = thicknessScaler(ttl);
             // ctx.strokeStyle = transparency(ttl).toString();
-            
-            ctx.moveTo(points[i-1].x, points[i-1].y);
+
             ctx.lineTo(points[i].x, points[i].y);
-            ctx.stroke();
         }
+        ctx.stroke();
     }
 
     requestAnimationFrame(draw);
