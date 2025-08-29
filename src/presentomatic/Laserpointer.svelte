@@ -1,10 +1,27 @@
 <script lang="ts">
-    import {onMount} from "svelte";
+    import { onMount } from "svelte";
+    import { scaleLinear } from "d3-scale";
+    import { color } from "d3-color";
+
+    interface Point {
+        x: number;
+        y: number;
+        despawnTime: Date;
+    }
+
     let active = false;
     let canvas: HTMLCanvasElement | null;
     let lasering = false;
-    let points = [];
+    let points: Point[] = [];
     let counter = 0;
+    const transparency = scaleLinear()
+        .domain([300, 0])
+        .range([color("rgba(255, 0, 0, 1)"), color("rgba(255, 255, 0, 0)")])
+        .clamp(true);
+
+    const thicknessScaler = scaleLinear()
+        .domain([300, 0])
+        .clamp(true);
 
     function keydown(ev: KeyboardEvent) {
         // console.log(ev);
@@ -16,7 +33,13 @@
 
     function startLaser(ev: MouseEvent) {
         lasering = true;
-        points = [[ev.clientX, ev.clientY]];
+        points = [
+            {
+                x: ev.clientX,
+                y: ev.clientY,
+                despawnTime: new Date().getTime() + 3000,
+            },
+        ];
     }
 
     function stopLaser() {
@@ -25,43 +48,27 @@
 
     function drawLaser(ev: MouseEvent) {
         if (!lasering || !canvas) return;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
 
         counter++;
-        if (counter % 5 !== 0) {
+        if (counter % 2 !== 0) {
             return;
         }
 
-        points.push([ev.clientX, ev.clientY]);
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Define a new path
-        ctx.beginPath();
-        const thickness = Math.min(canvas.width, canvas.height) * 0.01;
-        ctx.lineWidth = thickness;
-        ctx.lineCap = "round";
-        ctx.strokeStyle = `rgba(255, 0, 0, 0.5)`;
-
-        // Set a start-point
-        ctx.moveTo(points[0][0], points[0][1]);
-
-        for (let i = 1; i < points.length; i++) {
-            ctx.lineTo(points[i][0], points[i][1]);
-        }
-
-        // Stroke it (Do the Drawing)
-        ctx.stroke();
-
+        points.push({
+            x: ev.clientX,
+            y: ev.clientY,
+            despawnTime: new Date().getTime() + 3000,
+        });
     }
 
     function resizeCanvas() {
-        console.log('resizeCanvas called', canvas);
+        console.log("resizeCanvas called", canvas);
         if (!canvas) return;
-        console.log('resize', window.innerWidth, window.innerHeight);
+        console.log("resize", window.innerWidth, window.innerHeight);
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+
+        thicknessScaler.range([Math.min(canvas.width, canvas.height) * 0.01, Math.min(canvas.width, canvas.height) * 0.02]);
     }
 
     onMount(() => {
@@ -70,10 +77,50 @@
 
     $: {
         if (canvas) {
-            console.log('canvas size:', canvas.width, canvas.height);
+            console.log("canvas size:", canvas.width, canvas.height);
             resizeCanvas();
         }
+
+        if (active) {
+            requestAnimationFrame(draw);
+        }
     }
+
+    function draw() {
+        if (!active) return;
+        if (!canvas) return;
+        requestAnimationFrame(draw);
+        while (points.length > 0 && points[0].despawnTime < new Date()) {
+            points.shift();
+        }
+
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (points.length === 0) return;
+
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        const now = new Date().getTime();
+
+        // Set a start-point
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.strokeStyle = "rgba(255,0,0,1)";
+
+        for (let i = 1; i < points.length; i++) {
+        ctx.beginPath();
+            const ttl = points[i].despawnTime - now;
+            ctx.lineWidth = thicknessScaler(ttl);
+            // ctx.strokeStyle = transparency(ttl).toString();
+            
+            ctx.moveTo(points[i-1].x, points[i-1].y);
+            ctx.lineTo(points[i].x, points[i].y);
+            ctx.stroke();
+        }
+    }
+
+    requestAnimationFrame(draw);
 </script>
 
 <svelte:window onkeydown={keydown} onresize={resizeCanvas} />
