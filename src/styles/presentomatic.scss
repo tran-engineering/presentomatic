@@ -32,6 +32,10 @@ div.slide {
   &.title-slide {
     background-color: var(--title-slide-bg);
     color: var(--title-slide-fg);
+    
+    a {
+      color: #ccf;
+    }
   }
 
 
