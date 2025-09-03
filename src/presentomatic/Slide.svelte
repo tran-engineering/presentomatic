@@ -8,7 +8,7 @@
     let slideContainer;
 
     $effect(() => {
-        console.log("Slide has changed", slide); // needed to make a dependency to slide
+        console.log("Slide options:", slide?.options); // needed to make a dependency to slide
         document
             .querySelectorAll("code")
             .forEach((el) => hljs.highlightElement(el));
@@ -29,22 +29,33 @@
                 .duration(600)
                 .style("opacity", 1)
                 .style("transform", null);
+            if (slide.options["animate-li"]) {
+                d3.select(slideContainer)
+                    .selectAll("li")
+                    .classed("hidden", true)
+                    .style("opacity", 0);
+            }
 
-            d3.select(slideContainer)
-                .selectAll("li")
-                .classed("hidden", true)
-                .style("opacity", 0);
+            mermaid.run({
+                nodes: slideContainer.querySelectorAll("figure.mermaid"),
+            });
         }
-
-        mermaid.run({
-            nodes: slideContainer.querySelectorAll("figure.mermaid"),
-        });
     });
 
     function keydown(ev: KeyboardEvent) {
         switch (ev.code) {
             case "ArrowLeft": {
-                const previousLi = d3.select(d3.select(slideContainer).selectAll("li:not(.hidden)").nodes().reverse()[0]);
+                if (!slide.options["animate-li"]) {
+                    previousSlide();
+                    return;
+                }
+                const previousLi = d3.select(
+                    d3
+                        .select(slideContainer)
+                        .selectAll("li:not(.hidden)")
+                        .nodes()
+                        .reverse()[0],
+                );
                 if (previousLi.empty()) {
                     previousSlide();
                     return;
@@ -57,6 +68,10 @@
                 break;
             }
             case "ArrowRight": {
+                if (!slide.options["animate-li"]) {
+                    nextSlide();
+                    return;
+                }
                 const nextLi = d3.select(slideContainer).select("li.hidden");
                 if (nextLi.empty()) {
                     nextSlide();

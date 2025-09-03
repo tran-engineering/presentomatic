@@ -5,6 +5,11 @@ export interface Slide {
   isTitleSlide: boolean;
   title: string;
   html: string;
+  options: SlideOptions;
+}
+
+export interface SlideOptions {
+    "animate-li": boolean;
 }
 
 export class MarkdownParser {
@@ -19,7 +24,6 @@ export class MarkdownParser {
     }
     
     static htmlToSlides(allHtml: string): Slide[] {
-        console.log(allHtml);
         return allHtml.split("<hr>").map((html, page) => ({
             page,
             isTitleSlide: html.includes("<h1"),
@@ -31,6 +35,7 @@ export class MarkdownParser {
             title: html.match(/<h\d\s*(.*?)>(.*?)<\/h\d>/)
                 ? html.match(/<h\d\s*(.*?)>(.*?)<\/h\d>/)[2]
                 : "Presentomatic",
+            options: html.match(/<!-- (.*?) -->/)?.[1] || {"animate-li": false}
         }));
     }
 }

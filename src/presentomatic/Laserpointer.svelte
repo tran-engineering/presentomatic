@@ -22,8 +22,6 @@
     const thicknessScaler = scaleLinear().domain([300, 0]).clamp(true);
 
     function keydown(ev: KeyboardEvent) {
-        // console.log(ev);
-        console.log(ev.code);
         if (ev.code === "KeyL") {
             active = !active;
         }

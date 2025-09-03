@@ -82,6 +82,7 @@ program
   .command('pdf')
   .description('Save presentation to a PDF')
   .option('-p, --port <port>', 'Port to run the server on', '1337')
+  .option('-o, --output <dir>', 'Output directory for the built files', '.')
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
   .action(async (arg, options) => {
     const c = await viteConfig(arg, options);
@@ -99,7 +100,7 @@ program
 
     for (const file of JSON.parse(c.define.MARKDOWN_FILES)) {
 
-      const countPages = ((await fs.readFile(path.join(arg, file), 'utf-8')).match(/---/g) || []).length + 1;
+      const countPages = ((await fs.readFile(path.join(arg, file), 'utf-8')).split(/\r?\n/).filter(l => l === '---') || []).length + 1;
       console.log(`Total pages: ${countPages}`);
       const urls = [];
       for (let i = 0; i < countPages; i++) {
@@ -121,8 +122,9 @@ program
       const outFile = file.replace('.md', '.pdf')
 
       const pdfBytes = await pdfDoc.save();
-      await fs.writeFile(outFile, pdfBytes);
-      console.log(`PDF saved to ${outFile}`);
+      const realPath = resolve(options.output, outFile);
+      await fs.writeFile(realPath, pdfBytes);
+      console.log(`PDF saved to ${realPath}`);
     }
     await browser.close();
     await server.close();
