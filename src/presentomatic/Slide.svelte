@@ -44,18 +44,26 @@
     function keydown(ev: KeyboardEvent) {
         switch (ev.code) {
             case "ArrowLeft": {
-                previousSlide();
+                const previousLi = d3.select(d3.select(slideContainer).selectAll("li:not(.hidden)").nodes().reverse()[0]);
+                if (previousLi.empty()) {
+                    previousSlide();
+                    return;
+                }
+                previousLi
+                    .classed("hidden", true)
+                    .transition()
+                    .duration(300)
+                    .style("opacity", 0);
                 break;
             }
             case "ArrowRight": {
-                const nextLi = d3
-                    .select(slideContainer)
-                    .select("li.hidden");
+                const nextLi = d3.select(slideContainer).select("li.hidden");
                 if (nextLi.empty()) {
                     nextSlide();
                     return;
                 }
-                nextLi.classed("hidden", false)
+                nextLi
+                    .classed("hidden", false)
                     .transition()
                     .duration(300)
                     .style("opacity", 1);
