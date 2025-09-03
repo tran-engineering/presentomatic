@@ -24,7 +24,10 @@ export class MarkdownParser {
     }
     
     static htmlToSlides(allHtml: string): Slide[] {
-        return allHtml.split("<hr>").map((html, page) => ({
+        
+        return allHtml.split("<hr>").map((html, page) => {
+            const comments = html.match(/<!-- (.*?) -->/);
+            return {
             page,
             isTitleSlide: html.includes("<h1"),
             html: html
@@ -35,7 +38,8 @@ export class MarkdownParser {
             title: html.match(/<h\d\s*(.*?)>(.*?)<\/h\d>/)
                 ? html.match(/<h\d\s*(.*?)>(.*?)<\/h\d>/)[2]
                 : "Presentomatic",
-            options: html.match(/<!-- (.*?) -->/)?.[1] || {"animate-li": false}
-        }));
+            options: comments ? JSON.parse(comments[1]) : {"animate-li": false}
+            };
+        });
     }
 }

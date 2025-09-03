@@ -29,6 +29,7 @@
                 .duration(600)
                 .style("opacity", 1)
                 .style("transform", null);
+
             if (slide.options["animate-li"]) {
                 d3.select(slideContainer)
                     .selectAll("li")
