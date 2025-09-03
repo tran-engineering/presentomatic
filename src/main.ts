@@ -1,6 +1,4 @@
 import "css-reset-and-normalize";
-
-
 import { mount } from 'svelte'
 import Presentomatic from './Presentomatic.svelte'
 

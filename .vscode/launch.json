@@ -10,7 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/presentomatic.js",
             "cwd": "${workspaceFolder}",
-            "args": ["pdf", "public"],
+            "args": ["build", "example-presentation"],
             "console": "integratedTerminal"
         }
     ]

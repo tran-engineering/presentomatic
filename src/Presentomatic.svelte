@@ -12,7 +12,7 @@
     import Laserpointer from "./presentomatic/Laserpointer.svelte";
 
     const searchParams = new URLSearchParams(window.location.search);
-    const file = searchParams.get('f') || window.MARKDOWN_FILES[0];
+    const file = searchParams.get('f') || "FREECAD_01.md";
     let disableAnimations = searchParams.get('no-animations') !== null;
     
     let currentSlide: SlideType | undefined;

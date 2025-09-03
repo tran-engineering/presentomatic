@@ -50,7 +50,7 @@ async function viteConfig(arg, options) {
     ],
     base: '',
     define: {
-      MARKDOWN_FILES: JSON.stringify(markdownFiles),
+      MARKDOWN_FILES: JSON.stringify(markdownFiles)
     }
   });
 };
@@ -75,6 +75,7 @@ program
   .option('-o, --output <dir>', 'Output directory for the built files', 'dist')
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
   .action(async (args, options) => {
+    console.log(await viteConfig(args, options));
     await build(await viteConfig(args, options));
   });
 
