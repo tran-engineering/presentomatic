@@ -30,7 +30,7 @@ const reloader = () => ({
 
 async function viteConfig(arg, options) {
   const dir = resolve(arg);
-  const markdownFiles = (await fs.readdir(dir)).filter(file => file.endsWith(".md")).sort();
+  const markdownFiles = (await fs.readdir(dir)).filter(file => file.endsWith(".md").filter(file => file != "README.md")).sort();
   if (markdownFiles.length === 0) {
     throw new Error("No markdown files found");
   }
