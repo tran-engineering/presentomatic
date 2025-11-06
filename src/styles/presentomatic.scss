@@ -47,11 +47,12 @@ div.slide {
     justify-content: center;
   }
 
-  div.hljs {
+  .hljs {
     position: relative;
     cursor: pointer;
     border-radius: 0.4em;
     margin: 0.5em 0;
+    padding: 0.5em;
     white-space: pre;
     overflow: hidden;
 
@@ -64,9 +65,8 @@ div.slide {
       content: "📋";
     }
 
-    background: #011627;
+    color: #999;
     display: block;
-    padding: 0.1em;
     border-radius: 0.4em;
   }
 

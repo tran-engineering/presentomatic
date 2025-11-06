@@ -10,10 +10,10 @@
     $effect(() => {
         console.log("Slide options:", slide?.options); // needed to make a dependency to slide
         document
-            .querySelectorAll("code")
-            .forEach((el) => hljs.highlightElement(el));
+            .querySelectorAll("pre:not(.mermaid)")
+            .forEach((el:HTMLPreElement) => hljs.highlightElement(el));
 
-        document.querySelectorAll("div.hljs").forEach((el: HTMLDivElement) =>
+        document.querySelectorAll(".hljs").forEach((el: HTMLDivElement) =>
             el.addEventListener("click", () => {
                 navigator.clipboard.writeText(el.innerText);
             }),
@@ -38,7 +38,7 @@
             }
 
             mermaid.run({
-                nodes: slideContainer.querySelectorAll("figure.mermaid"),
+                nodes: slideContainer.querySelectorAll(".mermaid"),
             });
         }
     });
