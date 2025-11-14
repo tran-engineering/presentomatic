@@ -36,11 +36,10 @@
                     .classed("hidden", true)
                     .style("opacity", 0);
             }
-
-            mermaid.run({
-                nodes: slideContainer.querySelectorAll(".mermaid"),
-            });
         }
+        mermaid.run({
+            nodes: slideContainer.querySelectorAll(".mermaid"),
+        });
     });
 
     function keydown(ev: KeyboardEvent) {
