@@ -32,7 +32,7 @@ div.slide {
   &.title-slide {
     background-color: var(--title-slide-bg);
     color: var(--title-slide-fg);
-    
+
     a {
       color: #ccf;
     }
@@ -79,8 +79,8 @@ div.slide {
   }
 
   img {
-    width: 100%;
-    max-height: 45vh;
+    max-width: 80vw;
+    max-height: 80vh;
     display: block;
     margin: 0 auto;
     object-fit: contain;

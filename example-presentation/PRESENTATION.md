@@ -46,18 +46,18 @@ animate();
 
 Using MermaidJS
 
-<figure class="mermaid">
+<pre class="mermaid">
 graph TB
     A[Expectation 🤩] -->|Coding| B[Building cool features 🚀]
     A -->|Work environment| C[Chill office + free snacks 🍩]
     A -->|Career| D[Becoming a rockstar dev 🎸]
-</figure>
-<figure class="mermaid">
+</pre>
+<pre class="mermaid">
 graph TB
     X[Reality 😅] -->|Coding| Y[StackOverflow copy-paste 🔍]
     X -->|Work environment| Z[Meetings about meetings 📅]
     X -->|Career| W[Fixing merge conflicts forever 🔄]
-</figure>
+</pre>
 
 ---
 
