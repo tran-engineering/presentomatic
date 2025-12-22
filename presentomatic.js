@@ -31,6 +31,7 @@ const reloader = () => ({
 async function viteConfig(arg, options) {
   const dir = resolve(arg);
   const markdownFiles = (await fs.readdir(dir)).filter(file => file.endsWith(".md")).filter(file => file != "README.md").sort();
+  const cssFiles = (await fs.readdir(dir)).filter(file => file.endsWith(".css")).sort();
   if (markdownFiles.length === 0) {
     throw new Error("No markdown files found");
   }
@@ -50,14 +51,15 @@ async function viteConfig(arg, options) {
     ],
     base: '',
     define: {
-      MARKDOWN_FILES: JSON.stringify(markdownFiles)
+      MARKDOWN_FILES: JSON.stringify(markdownFiles),
+      CSS_FILES: JSON.stringify(cssFiles)
     }
   });
 };
 
 
 program
-  .command('serve')
+  .command('serve', {isDefault: true})
   .description('Serve the presentation')
   .option('-p, --port <port>', 'Port to run the server on', '1337')
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
