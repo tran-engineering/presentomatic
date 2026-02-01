@@ -1,8 +1,8 @@
 <script lang="ts">
     import "./styles/colors.scss";
-    import "./styles/presentomatic.scss";
     import "github-markdown-css/github-markdown-light.css";
     import "highlight.js/scss/night-owl.scss";
+    import "./styles/presentomatic.scss";
     import { onMount } from "svelte";
 
     import { MarkdownParser } from "./util/MarkdownParser";
@@ -15,9 +15,9 @@
     const file = searchParams.get('f') || MARKDOWN_FILES[0];
     const cssFiles = CSS_FILES;
     let disableAnimations = searchParams.get('no-animations') !== null;
-    
+
     let currentSlide: SlideType | undefined;
-    
+
     let slides: SlideType[] = [];
 
     onMount(async () => {
@@ -71,10 +71,10 @@
     class:animations={!disableAnimations}
 >
     {#if currentSlide}
-        <Slide 
-        slide={currentSlide} 
-        {disableAnimations} 
-        nextSlide={() => nextSlide()} 
+        <Slide
+        slide={currentSlide}
+        {disableAnimations}
+        nextSlide={() => nextSlide()}
         previousSlide={() => previousSlide()}
         />
     {/if}

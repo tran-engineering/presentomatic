@@ -59,7 +59,7 @@ async function viteConfig(arg, options) {
 
 
 program
-  .command('serve', {isDefault: true})
+  .command('serve', { isDefault: true })
   .description('Serve the presentation')
   .option('-p, --port <port>', 'Port to run the server on', '1337')
   .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
