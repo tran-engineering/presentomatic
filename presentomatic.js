@@ -47,6 +47,15 @@ async function viteConfig(arg, options) {
     publicDir: resolve(arg),
     build: {
       outDir: options.output ? resolve(options.output) : undefined,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-highlight-core': ['highlight.js/lib/core'],
+            'vendor-d3': ['d3-selection', 'd3-transition'],
+            'vendor-marked': ['marked'],
+          }
+        }
+      }
     },
     plugins: [
       svelte(), reloader(dir)
