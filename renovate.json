@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    // https://docs.renovatebot.com/presets-config/#configrecommended
+    "config:recommended",
+    // https://docs.renovatebot.com/presets-group/#groupallnonmajor
+    "group:allNonMajor",
+    // https://docs.renovatebot.com/presets-default/#prconcurrentlimit10
+    ":prConcurrentLimit10"
+  ]
+}
