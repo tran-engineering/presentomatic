@@ -12,19 +12,21 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 
-const reloader = () => ({
+const reloader = (watchDir) => ({
   name: "custom-hmr",
   enforce: "post",
-  // HMR
-  handleHotUpdate({ file, server }) {
-    if (file.endsWith(".md")) {
-      console.log("Hot reload: Markdown changed!");
-
-      server.ws.send({
-        type: "full-reload",
-        path: "*",
-      });
-    }
+  configureServer(server) {
+    const chokidar = server.watcher;
+    chokidar.add(watchDir);
+    chokidar.on('change', (file) => {
+      if (file.endsWith(".md") || file.endsWith(".css")) {
+        console.log(`Hot reload: ${path.basename(file)} changed!`);
+        server.ws.send({
+          type: "full-reload",
+          path: "*",
+        });
+      }
+    });
   },
 });
 
@@ -47,7 +49,7 @@ async function viteConfig(arg, options) {
       outDir: options.output ? resolve(options.output) : undefined,
     },
     plugins: [
-      svelte(), reloader()
+      svelte(), reloader(dir)
     ],
     base: '',
     define: {

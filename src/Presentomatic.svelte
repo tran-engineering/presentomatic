@@ -1,7 +1,7 @@
 <script lang="ts">
     import "./styles/colors.scss";
     import "github-markdown-css/github-markdown-light.css";
-    import "highlight.js/scss/night-owl.scss";
+    import "highlight.js/scss/github-dark.scss";
     import "./styles/presentomatic.scss";
     import { onMount } from "svelte";
 
