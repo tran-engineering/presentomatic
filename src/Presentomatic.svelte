@@ -10,6 +10,7 @@
     import { type Slide as SlideType } from "./util/MarkdownParser";
     import Navigation from "./presentomatic/Navigation.svelte";
     import Laserpointer from "./presentomatic/Laserpointer.svelte";
+    import favicon from "./assets/favicon.ico";
 
     const searchParams = new URLSearchParams(window.location.search);
     const file = searchParams.get('f') || MARKDOWN_FILES[0];
@@ -60,6 +61,7 @@
 
 <svelte:head>
 	<title>🖵 {currentSlide?.title}</title>
+    <link rel="icon" href={favicon}>
     {#each CSS_FILES || [] as cssFile}
         <link rel="stylesheet" href={cssFile} />
     {/each}
