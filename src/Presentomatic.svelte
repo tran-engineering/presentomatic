@@ -14,7 +14,6 @@
 
     const searchParams = new URLSearchParams(window.location.search);
     const file = searchParams.get('f') || MARKDOWN_FILES[0];
-    const cssFiles = CSS_FILES;
     let disableAnimations = searchParams.get('no-animations') !== null;
 
     let currentSlide: SlideType | undefined;
@@ -62,7 +61,7 @@
 <svelte:head>
 	<title>🖵 {currentSlide?.title}</title>
     <link rel="icon" href={favicon}>
-    {#each CSS_FILES || [] as cssFile}
+    {#each CSS_FILES || [] as cssFile (cssFile)}
         <link rel="stylesheet" href={cssFile} />
     {/each}
 </svelte:head>
