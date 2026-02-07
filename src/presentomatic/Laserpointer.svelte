@@ -1,7 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { scaleLinear } from "d3-scale";
-    import { color } from "d3-color";
 
     interface Point {
         x: number;
@@ -14,10 +13,6 @@
     let lasering = false;
     let points: Point[] = [];
     let counter = 0;
-    const transparency = scaleLinear()
-        .domain([300, 0])
-        .range([color("rgba(255, 0, 0, 1)"), color("rgba(255, 255, 0, 0)")])
-        .clamp(true);
 
     const thicknessScaler = scaleLinear().domain([300, 0]).clamp(true);
 

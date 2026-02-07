@@ -12,7 +12,9 @@ export default ts.config(
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node
+        ...globals.node,
+        MARKDOWN_FILES: 'readonly',
+        CSS_FILES: 'readonly'
       }
     }
   },

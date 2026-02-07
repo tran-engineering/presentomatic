@@ -87,7 +87,8 @@
         openFile(nextFile);
     }
 
-    function openFile(file) {
+    function openFile(file: string) {
+        // eslint-disable-next-line svelte/prefer-svelte-reactivity -- not used as reactive state
         const searchParams = new URLSearchParams(window.location.search);
         searchParams.set("f", file);
         window.location.hash = "";

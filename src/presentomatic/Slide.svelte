@@ -49,10 +49,12 @@
         'svg': 'xml',
     };
 
+    // eslint-disable-next-line svelte/prefer-svelte-reactivity -- not used as reactive state
     const registeredLanguages = new Set<string>();
 
-    async function loadAndHighlight(codeBlocks: NodeListOf<HTMLPreElement>) {
+    async function loadAndHighlight(codeBlocks: ReturnType<typeof document.querySelectorAll<HTMLPreElement>>) {
         // Detect languages from code blocks
+        // eslint-disable-next-line svelte/prefer-svelte-reactivity -- not used as reactive state
         const languages = new Set<string>();
         codeBlocks.forEach((pre) => {
             const code = pre.querySelector('code');
