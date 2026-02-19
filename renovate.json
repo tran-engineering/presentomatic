@@ -8,5 +8,7 @@
     // https://docs.renovatebot.com/presets-default/#prconcurrentlimit10
     ":prConcurrentLimit10"
   ],
+  "schedule": ["before 6am on monday"],
+  "semanticCommitType": "fix",
   "automerge": true
 }
