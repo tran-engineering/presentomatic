@@ -14,7 +14,8 @@ export interface SlideOptions {
 
 export class MarkdownParser {
   static async mdToSlides(md: string): Promise<Slide[]> {
-    return this.htmlToSlides(await this.mdToHtml(md));
+    const mermaidToPre = md.replace(/```mermaid([\s\S]*?)```/g, '<pre mermaid>$1</pre>');
+    return this.htmlToSlides(await this.mdToHtml(mermaidToPre));
   }
 
   static async mdToHtml(md: string): Promise<string> {

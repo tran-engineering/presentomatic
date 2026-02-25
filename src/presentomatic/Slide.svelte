@@ -98,7 +98,7 @@
 
   $effect(() => {
     console.log('Slide options:', slide?.options); // needed to make a dependency to slide
-    const codeBlocks = document.querySelectorAll<HTMLPreElement>('pre:not(.mermaid)');
+    const codeBlocks = document.querySelectorAll<HTMLPreElement>('pre:not([mermaid])');
     if (codeBlocks.length > 0) {
       loadAndHighlight(codeBlocks);
     }
@@ -120,7 +120,7 @@
     }
 
     // Dynamic import mermaid only when needed
-    const mermaidNodes = slideContainer.querySelectorAll('.mermaid');
+    const mermaidNodes = slideContainer.querySelectorAll('pre[mermaid]');
     if (mermaidNodes.length > 0) {
       import('mermaid').then(({ default: mermaid }) => {
         mermaid.run({ nodes: mermaidNodes });
