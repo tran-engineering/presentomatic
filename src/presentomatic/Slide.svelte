@@ -2,6 +2,7 @@
   import hljs from 'highlight.js/lib/core';
   import { select } from 'd3-selection';
   import 'd3-transition';
+  import MermaidOverlay from './MermaidOverlay.svelte';
 
   let { slide, disableAnimations, nextSlide, previousSlide } = $props();
 
@@ -96,6 +97,8 @@
     );
   }
 
+  let overlaySvg: SVGSVGElement | null = $state(null);
+
   $effect(() => {
     console.log('Slide options:', slide?.options); // needed to make a dependency to slide
     const codeBlocks = document.querySelectorAll<HTMLPreElement>('pre:not([mermaid])');
@@ -123,7 +126,14 @@
     const mermaidNodes = slideContainer.querySelectorAll('pre[mermaid]');
     if (mermaidNodes.length > 0) {
       import('mermaid').then(({ default: mermaid }) => {
-        mermaid.run({ nodes: mermaidNodes });
+        mermaid.run({ nodes: mermaidNodes }).then(() => {
+          mermaidNodes.forEach((node: Element) => {
+            const svg = node.querySelector('svg');
+            if (!svg) return;
+            svg.style.cursor = 'pointer';
+            svg.addEventListener('click', () => (overlaySvg = svg));
+          });
+        });
       });
     }
   });
@@ -161,6 +171,10 @@
     }
   }
 </script>
+
+{#if overlaySvg}
+  <MermaidOverlay svg={overlaySvg} onclose={() => (overlaySvg = null)} />
+{/if}
 
 <svelte:window on:keydown={keydown} />
 
