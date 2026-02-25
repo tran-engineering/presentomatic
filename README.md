@@ -30,10 +30,10 @@ Today is a beautiful day.
 ## Slide 2
 
 Tomorrow will also be sunny.
-
 ```
 
 ## Advanced features
+
 ### Building PDFs
 
 Generate a PDF version of your presentation:

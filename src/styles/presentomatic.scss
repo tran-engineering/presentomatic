@@ -21,7 +21,7 @@ div.slide {
   overflow: auto;
   color: var(--normal-slide-fg);
 
-  &[data-disable-animations="true"] {
+  &[data-disable-animations='true'] {
     transition: none;
     opacity: 1;
   }
@@ -38,7 +38,6 @@ div.slide {
       color: #ccf;
     }
   }
-
 
   &.title-slide {
     color: var(--title-slide-fg);
@@ -64,7 +63,7 @@ div.slide {
       top: 0.5em;
       opacity: 0.6;
       font-size: 60%;
-      content: "📋";
+      content: '📋';
     }
 
     color: #999;
@@ -107,13 +106,13 @@ nav {
   left: 5vw;
   right: 5vw;
 
-  >div {
+  > div {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
 
-    >button {
+    > button {
       opacity: 0;
       outline: none;
       margin: 0.1em;
@@ -141,12 +140,11 @@ nav {
     }
 
     &.files {
-      >button {
+      > button {
         margin: 0.5em;
         padding: 0.5em;
       }
     }
-
   }
 }
 

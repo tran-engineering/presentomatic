@@ -6,7 +6,11 @@
     "test": "vitest",
     "start": "node presentomatic.js serve example-presentation",
     "build": "node presentomatic.js build example-presentation",
-    "pdf": "node presentomatic.js pdf example-presentation"
+    "pdf": "node presentomatic.js pdf example-presentation",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "bin": {
     "presentomatic": "presentomatic.js"
@@ -58,7 +62,10 @@
     "@semantic-release/git": "^10.0.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/svelte": "^5.3.1",
+    "eslint-config-prettier": "^10.1.8",
     "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-svelte": "^3.5.0",
     "semantic-release": "^25.0.3",
     "typescript-eslint": "^8.54.0",
     "vitest": "^4.0.18"

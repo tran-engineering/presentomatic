@@ -1,48 +1,51 @@
 #!/usr/bin/env node
 
-import { fileURLToPath } from 'node:url'
-import { createServer, build, defineConfig } from 'vite'
+import { fileURLToPath } from 'node:url';
+import { createServer, build, defineConfig } from 'vite';
 import { program } from 'commander';
 import { resolve } from 'node:path';
 import puppeteer from 'puppeteer';
 import fs from 'node:fs/promises';
 import path from 'path';
 import pdflib from 'pdf-lib';
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const reloader = (watchDir) => ({
-  name: "custom-hmr",
-  enforce: "post",
+  name: 'custom-hmr',
+  enforce: 'post',
   configureServer(server) {
     const chokidar = server.watcher;
     chokidar.add(watchDir);
     chokidar.on('change', (file) => {
-      if (file.endsWith(".md") || file.endsWith(".css")) {
+      if (file.endsWith('.md') || file.endsWith('.css')) {
         console.log(`Hot reload: ${path.basename(file)} changed!`);
         server.ws.send({
-          type: "full-reload",
-          path: "*",
+          type: 'full-reload',
+          path: '*'
         });
       }
     });
-  },
+  }
 });
 
 async function viteConfig(arg, options) {
   const dir = resolve(arg);
-  const markdownFiles = (await fs.readdir(dir)).filter(file => file.endsWith(".md")).filter(file => file != "README.md").sort();
-  const cssFiles = (await fs.readdir(dir)).filter(file => file.endsWith(".css")).sort();
+  const markdownFiles = (await fs.readdir(dir))
+    .filter((file) => file.endsWith('.md'))
+    .filter((file) => file != 'README.md')
+    .sort();
+  const cssFiles = (await fs.readdir(dir)).filter((file) => file.endsWith('.css')).sort();
   if (markdownFiles.length === 0) {
-    throw new Error("No markdown files found");
+    throw new Error('No markdown files found');
   }
   return defineConfig({
     configFile: false,
     root: __dirname,
     server: {
       port: options.port,
-      host: true,
+      host: true
     },
     publicDir: resolve(arg),
     build: {
@@ -52,30 +55,30 @@ async function viteConfig(arg, options) {
           manualChunks: {
             'vendor-highlight-core': ['highlight.js/lib/core'],
             'vendor-d3': ['d3-selection', 'd3-transition'],
-            'vendor-marked': ['marked'],
+            'vendor-marked': ['marked']
           }
         }
       }
     },
-    plugins: [
-      svelte(), reloader(dir)
-    ],
+    plugins: [svelte(), reloader(dir)],
     base: '',
     define: {
       MARKDOWN_FILES: JSON.stringify(markdownFiles),
       CSS_FILES: JSON.stringify(cssFiles)
     }
   });
-};
-
+}
 
 program
   .command('serve', { isDefault: true })
   .description('Serve the presentation')
   .option('-p, --port <port>', 'Port to run the server on', '1337')
-  .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
+  .argument(
+    '[string]',
+    'Path to the public directory defaults to current directory. Must contain PRESENTATION.md',
+    '.'
+  )
   .action(async (arg, options) => {
-
     const server = await createServer(await viteConfig(arg, options));
     await server.listen();
 
@@ -86,7 +89,11 @@ program
   .command('build')
   .description('Build static html for the presentation')
   .option('-o, --output <dir>', 'Output directory for the built files', 'dist')
-  .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
+  .argument(
+    '[string]',
+    'Path to the public directory defaults to current directory. Must contain PRESENTATION.md',
+    '.'
+  )
   .action(async (args, options) => {
     console.log(await viteConfig(args, options));
     await build(await viteConfig(args, options));
@@ -97,7 +104,11 @@ program
   .description('Save presentation to a PDF')
   .option('-p, --port <port>', 'Port to run the server on', '1337')
   .option('-o, --output <dir>', 'Output directory for the built files', '.')
-  .argument('[string]', 'Path to the public directory defaults to current directory. Must contain PRESENTATION.md', '.')
+  .argument(
+    '[string]',
+    'Path to the public directory defaults to current directory. Must contain PRESENTATION.md',
+    '.'
+  )
   .action(async (arg, options) => {
     const c = await viteConfig(arg, options);
     const server = await createServer(c);
@@ -106,19 +117,20 @@ program
     console.log(`Server is running on port: ${server.resolvedUrls.local[0]}`);
     const browser = await puppeteer.launch({
       headless: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-      ]
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
 
     for (const file of JSON.parse(c.define.MARKDOWN_FILES)) {
-
-      const countPages = ((await fs.readFile(path.join(arg, file), 'utf-8')).split(/\r?\n/).filter(l => l === '---') || []).length + 1;
+      const countPages =
+        (
+          (await fs.readFile(path.join(arg, file), 'utf-8'))
+            .split(/\r?\n/)
+            .filter((l) => l === '---') || []
+        ).length + 1;
       console.log(`Total pages: ${countPages}`);
       const urls = [];
       for (let i = 0; i < countPages; i++) {
-        urls.push(`${server.resolvedUrls.local[0]}?f=${file}&no-animations#${i + 1}`)
+        urls.push(`${server.resolvedUrls.local[0]}?f=${file}&no-animations#${i + 1}`);
       }
       const page = await browser.newPage();
       const pdfDoc = await pdflib.PDFDocument.create();
@@ -133,7 +145,7 @@ program
         pdfDoc.addPage(p);
       }
 
-      const outFile = file.replace('.md', '.pdf')
+      const outFile = file.replace('.md', '.pdf');
 
       const pdfBytes = await pdfDoc.save();
       const realPath = resolve(options.output, outFile);
@@ -148,6 +160,6 @@ program.parse();
 
 function delay(time) {
   return new Promise(function (resolve) {
-    setTimeout(resolve, time)
+    setTimeout(resolve, time);
   });
 }

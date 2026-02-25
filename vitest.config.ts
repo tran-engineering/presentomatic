@@ -1,5 +1,5 @@
-import { defineConfig } from 'vitest/config'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { defineConfig } from 'vitest/config';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
 
 export default defineConfig({
   plugins: [svelte({ hot: !process.env.VITEST })],
@@ -9,14 +9,14 @@ export default defineConfig({
     include: ['src/**/*.{test,spec}.{js,ts}'],
     setupFiles: ['src/test/setup.ts'],
     alias: {
-      svelte: 'svelte',
-    },
+      svelte: 'svelte'
+    }
   },
   resolve: {
-    conditions: ['browser'],
+    conditions: ['browser']
   },
   define: {
     MARKDOWN_FILES: JSON.stringify(['test.md']),
-    CSS_FILES: JSON.stringify([]),
-  },
-})
+    CSS_FILES: JSON.stringify([])
+  }
+});
