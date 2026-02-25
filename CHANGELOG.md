@@ -1,3 +1,11 @@
+# [2.22.0](https://github.com/tran-engineering/presentomatic/compare/v2.21.1...v2.22.0) (2026-02-25)
+
+
+### Features
+
+* add Prettier and EditorConfig for consistent code formatting ([e2bf889](https://github.com/tran-engineering/presentomatic/commit/e2bf889141646354e727717993304a283fbc4d8b))
+* convert mermaid code blocks to <pre mermaid> tags before parsing ([5c3f96f](https://github.com/tran-engineering/presentomatic/commit/5c3f96fe41a3c8cee36fddce6ad9b0490c92f5e3))
+
 ## [2.21.1](https://github.com/tran-engineering/presentomatic/compare/v2.21.0...v2.21.1) (2026-02-19)
 
 ### Bug Fixes
