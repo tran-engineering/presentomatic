@@ -1,3 +1,10 @@
+# [2.24.0](https://github.com/tran-engineering/presentomatic/compare/v2.23.0...v2.24.0) (2026-03-01)
+
+
+### Features
+
+* Add support for columns ([238ec36](https://github.com/tran-engineering/presentomatic/commit/238ec36b8fd0153d1b1f56a155497358ab9ddef2))
+
 # [2.23.0](https://github.com/tran-engineering/presentomatic/compare/v2.22.0...v2.23.0) (2026-02-25)
 
 
