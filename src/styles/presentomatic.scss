@@ -12,6 +12,17 @@ main {
 }
 
 div.slide {
+  display: flex;
+  gap: 0;
+  & > * + * {
+    border-left: 1px solid currentColor;
+  }
+
+  & > * {
+    flex: 1;
+    padding: 0 0.5em;
+  }
+
   transition: all 600ms;
 
   position: fixed;

@@ -1,6 +1,8 @@
 # presentomatic
 
-Markdown presentations made simple
+Markdown presentations made simple.
+
+An example presentation can be viewed here: https://tran-engineering.github.io/presentomatic
 
 ## Installation
 

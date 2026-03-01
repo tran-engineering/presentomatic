@@ -14,7 +14,9 @@ export interface SlideOptions {
 
 export class MarkdownParser {
   static async mdToSlides(md: string): Promise<Slide[]> {
-    const mermaidToPre = md.replace(/```mermaid([\s\S]*?)```/g, '<pre mermaid>$1</pre>');
+    const mermaidToPre = md
+      .replace(/```mermaid([\s\S]*?)```/g, '<pre mermaid>$1</pre>')
+      .replace(/\*\*\*/g, '<hr split>');
     return this.htmlToSlides(await this.mdToHtml(mermaidToPre));
   }
 
@@ -24,15 +26,16 @@ export class MarkdownParser {
   }
 
   static htmlToSlides(allHtml: string): Slide[] {
+    console.log('htmlToSlides', allHtml);
     return allHtml.split('<hr>').map((html, page) => {
       const comments = html.match(/<!-- (.*?) -->/);
+      const newHtml = html
+        .replace(/<a/g, '<a target="_blank"')
+        .replace(/<hr split>/, '</section><section>');
       return {
         page,
         isTitleSlide: html.includes('<h1'),
-        html: html
-          //                .replace(/<pre>/g, '<div class="hljs">')
-          //                .replace(/<\/pre>/g, "</div>")
-          .replace(/<a/g, '<a target="_blank"'),
+        html: `<section>${newHtml}</section>`,
         title: html.match(/<h\d\s*(.*?)>(.*?)<\/h\d>/)
           ? html.match(/<h\d\s*(.*?)>(.*?)<\/h\d>/)[2]
           : 'Presentomatic',
