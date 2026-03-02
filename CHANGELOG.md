@@ -1,3 +1,11 @@
+## [2.24.1](https://github.com/tran-engineering/presentomatic/compare/v2.24.0...v2.24.1) (2026-03-02)
+
+
+### Bug Fixes
+
+* layouting problems with columns ([f5d99be](https://github.com/tran-engineering/presentomatic/commit/f5d99beddd8902ae7ba133f6ec8239ccb169bfbb))
+* zoom and pan for mermaid overlay ([6a94232](https://github.com/tran-engineering/presentomatic/commit/6a942323fda4287c7cf5bb589d102c503495a98e))
+
 # [2.24.0](https://github.com/tran-engineering/presentomatic/compare/v2.23.0...v2.24.0) (2026-03-01)
 
 
