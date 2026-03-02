@@ -80,7 +80,7 @@ describe('Presentomatic', () => {
 
     await waitFor(() => {
       const main = screen.getByRole('main');
-      expect(main).toHaveClass('title-slide');
+      expect(main.querySelector('.slide')).toHaveClass('title-slide');
     });
   });
 

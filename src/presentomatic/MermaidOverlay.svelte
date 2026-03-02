@@ -23,13 +23,13 @@
     const containerRect = container.getBoundingClientRect();
     const ox = rect.left - containerRect.left;
     const oy = rect.top - containerRect.top;
-    const scaleX = width / rect.width;
-    const scaleY = height / rect.height;
+    // Use a single scale derived from width so both axes use the same px→userUnit ratio
+    const scale = width / rect.width;
     svg.call(
       zoom<HTMLDivElement, unknown>().on('zoom', (e) => {
         const { x, y, k } = e.transform;
-        const vx = (ox - x) * scaleX / k;
-        const vy = (oy - y) * scaleY / k;
+        const vx = ((ox - x) * scale) / k;
+        const vy = ((oy - y) * scale) / k;
         const vw = width / k;
         const vh = height / k;
         s.attr('viewBox', `${vx} ${vy} ${vw} ${vh}`);
