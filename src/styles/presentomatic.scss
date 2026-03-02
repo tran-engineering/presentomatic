@@ -3,17 +3,23 @@ body,
 main {
   width: 100vw;
   height: 100vh;
-  font-family: 'SN Pro', sans-serif !important;
 }
 
 main {
-  font-size: 4vmin !important;
+  font-family: 'SN Pro', sans-serif !important;
+
   overflow: hidden;
 }
 
 div.slide {
   display: flex;
   gap: 0;
+
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  padding: 5vh 10vw;
+
   & > * + * {
     border-left: 1px solid currentColor;
   }
@@ -23,13 +29,13 @@ div.slide {
     padding: 0 0.5em;
   }
 
+  section {
+    font-size: 4vmin !important;
+    overflow: auto;
+  }
+
   transition: all 600ms;
 
-  position: fixed;
-  padding: 5vh 10vw;
-  height: 100vh;
-  width: 100vw;
-  overflow: auto;
   color: var(--normal-slide-fg);
 
   &[data-disable-animations='true'] {

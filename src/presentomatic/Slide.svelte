@@ -179,7 +179,8 @@
 <svelte:window on:keydown={keydown} />
 
 <div
-  class="slide"
+  class:animations={!disableAnimations}
+  class="markdown-body slide"
   bind:this={slideContainer}
   class:title-slide={slide?.isTitleSlide}
   data-disable-animations={disableAnimations}

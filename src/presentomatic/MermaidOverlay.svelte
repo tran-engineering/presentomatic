@@ -10,11 +10,31 @@
     if (!container || !originalSvg) return;
 
     const clonedSvg = originalSvg.cloneNode(true) as SVGSVGElement;
+    clonedSvg.removeAttribute('width');
+    clonedSvg.removeAttribute('height');
+    clonedSvg.removeAttribute('style');
     container.appendChild(clonedSvg);
 
-    const svg = select(clonedSvg);
-    const g = svg.select('g');
-    svg.call(zoom<SVGSVGElement, unknown>().on('zoom', (e) => g.attr('transform', e.transform)));
+    const svg = select(container);
+    const s = svg.select<SVGSVGElement>('svg');
+    const { width, height } = clonedSvg.viewBox.baseVal;
+    // Capture offsets once at setup, before any zoom changes the layout
+    const rect = clonedSvg.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const ox = rect.left - containerRect.left;
+    const oy = rect.top - containerRect.top;
+    const scaleX = width / rect.width;
+    const scaleY = height / rect.height;
+    svg.call(
+      zoom<HTMLDivElement, unknown>().on('zoom', (e) => {
+        const { x, y, k } = e.transform;
+        const vx = (ox - x) * scaleX / k;
+        const vy = (oy - y) * scaleY / k;
+        const vw = width / k;
+        const vh = height / k;
+        s.attr('viewBox', `${vx} ${vy} ${vw} ${vh}`);
+      })
+    );
 
     return () => {
       clonedSvg.remove();
@@ -45,10 +65,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100vw;
+    height: 100vh;
     :global(svg) {
-      background-color: #fff;
       width: 90vw;
       height: 90vh;
+      background-color: #fff;
       max-width: none;
       max-height: none;
       cursor: grab;

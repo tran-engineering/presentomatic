@@ -66,11 +66,7 @@
   {/each}
 </svelte:head>
 
-<main
-  class="markdown-body"
-  class:title-slide={currentSlide?.isTitleSlide === true}
-  class:animations={!disableAnimations}
->
+<main>
   {#if currentSlide}
     <Slide
       slide={currentSlide}
