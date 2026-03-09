@@ -1,3 +1,10 @@
+## [2.24.2](https://github.com/tran-engineering/presentomatic/compare/v2.24.1...v2.24.2) (2026-03-09)
+
+
+### Bug Fixes
+
+* prevent section from exceeding available flex width ([df959c1](https://github.com/tran-engineering/presentomatic/commit/df959c132ea0bd56854c0c2167374c85a795183f))
+
 ## [2.24.1](https://github.com/tran-engineering/presentomatic/compare/v2.24.0...v2.24.1) (2026-03-02)
 
 
