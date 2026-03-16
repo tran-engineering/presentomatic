@@ -55,7 +55,7 @@
     "svelte": "^5.38.1",
     "svelte-check": "^4.3.1",
     "typescript": "^5.9.2",
-    "vite": "^7.1.2"
+    "vite": "^8.0.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
