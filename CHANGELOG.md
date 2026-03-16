@@ -1,3 +1,11 @@
+## [2.24.3](https://github.com/tran-engineering/presentomatic/compare/v2.24.2...v2.24.3) (2026-03-16)
+
+
+### Bug Fixes
+
+* **deps:** update dependency vite to v8 ([#64](https://github.com/tran-engineering/presentomatic/issues/64)) ([0d07334](https://github.com/tran-engineering/presentomatic/commit/0d07334c16df30ded368f746b662b7939eb83135))
+* regenerate lockfile with all-platform optional deps for npm ci compat ([fbb821a](https://github.com/tran-engineering/presentomatic/commit/fbb821a0038af9e6bd5a59aa8eb9fee7b009b2db))
+
 ## [2.24.2](https://github.com/tran-engineering/presentomatic/compare/v2.24.1...v2.24.2) (2026-03-09)
 
 
