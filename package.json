@@ -34,7 +34,7 @@
   "homepage": "https://github.com/tran-engineering/presentomatic#readme",
   "dependencies": {
     "@eslint/js": "^10.0.1",
-    "@sveltejs/vite-plugin-svelte": "^6.1.2",
+    "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@tsconfig/svelte": "^5.0.4",
     "@types/d3": "^7.1.0",
     "@types/events": "^3.0.0",
