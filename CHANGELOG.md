@@ -1,3 +1,10 @@
+## [2.24.4](https://github.com/tran-engineering/presentomatic/compare/v2.24.3...v2.24.4) (2026-04-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency typescript to v6 ([#69](https://github.com/tran-engineering/presentomatic/issues/69)) ([a07cd0c](https://github.com/tran-engineering/presentomatic/commit/a07cd0cf60e043375e60659069dddc0e179b47e2))
+
 ## [2.24.3](https://github.com/tran-engineering/presentomatic/compare/v2.24.2...v2.24.3) (2026-03-16)
 
 
