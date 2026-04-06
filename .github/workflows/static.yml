@@ -38,7 +38,7 @@ jobs:
       - name: Build static HTML from the directory example-presentation (replace this with the path to your presentation directory)
         run: npx presentomatic build example-presentation
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
