@@ -1,3 +1,10 @@
+## [2.24.5](https://github.com/tran-engineering/presentomatic/compare/v2.24.4...v2.24.5) (2026-04-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency marked to v18 ([#72](https://github.com/tran-engineering/presentomatic/issues/72)) ([d141dcd](https://github.com/tran-engineering/presentomatic/commit/d141dcdbdad8f7ae7bfa3dabc7dbee07a5398055))
+
 ## [2.24.4](https://github.com/tran-engineering/presentomatic/compare/v2.24.3...v2.24.4) (2026-04-06)
 
 
