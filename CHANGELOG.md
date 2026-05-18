@@ -1,3 +1,10 @@
+## [2.24.6](https://github.com/tran-engineering/presentomatic/compare/v2.24.5...v2.24.6) (2026-05-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency puppeteer to v25 ([#81](https://github.com/tran-engineering/presentomatic/issues/81)) ([14c6740](https://github.com/tran-engineering/presentomatic/commit/14c67400ac1e9126cd8a8bcc262caa98ddc564b9))
+
 ## [2.24.5](https://github.com/tran-engineering/presentomatic/compare/v2.24.4...v2.24.5) (2026-04-13)
 
 
