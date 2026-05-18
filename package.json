@@ -50,7 +50,7 @@
     "marked": "^18.0.0",
     "mermaid": "^11.4.0",
     "pdf-lib": "^1.17.1",
-    "puppeteer": "^24.16.2",
+    "puppeteer": "^25.0.0",
     "sass-embedded": "^1.90.0",
     "svelte": "^5.38.1",
     "svelte-check": "^4.3.1",
