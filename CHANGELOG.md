@@ -1,3 +1,10 @@
+## [2.24.7](https://github.com/tran-engineering/presentomatic/compare/v2.24.6...v2.24.7) (2026-06-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency commander to v15 ([#85](https://github.com/tran-engineering/presentomatic/issues/85)) ([14f6007](https://github.com/tran-engineering/presentomatic/commit/14f6007a96b89ef8173e86b23a43e2aab0f5f8e1))
+
 ## [2.24.6](https://github.com/tran-engineering/presentomatic/compare/v2.24.5...v2.24.6) (2026-05-18)
 
 
