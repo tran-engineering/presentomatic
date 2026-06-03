@@ -1,3 +1,10 @@
+# [2.26.0](https://github.com/tran-engineering/presentomatic/compare/v2.25.0...v2.26.0) (2026-06-03)
+
+
+### Features
+
+* print GitHub Pages settings link after setup-github-workflow ([ff73ac8](https://github.com/tran-engineering/presentomatic/commit/ff73ac8f822fff2629ebb8708651554f9a40d248))
+
 # [2.25.0](https://github.com/tran-engineering/presentomatic/compare/v2.24.8...v2.25.0) (2026-06-03)
 
 
