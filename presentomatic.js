@@ -224,6 +224,18 @@ jobs:
 
     await fs.writeFile(workflowPath, workflow);
     console.log(`Workflow written to ${workflowPath}`);
+
+    let pagesUrl = 'https://github.com/<owner>/<repo>/settings/pages';
+    try {
+      const { execSync } = await import('node:child_process');
+      const remote = execSync('git remote get-url origin', { encoding: 'utf-8' }).trim();
+      const match = remote.match(/github\.com[:/](.+?)(?:\.git)?$/);
+      if (match) pagesUrl = `https://github.com/${match[1]}/settings/pages`;
+    } catch {}
+
+    console.log(`\nNext step: enable GitHub Pages for this repository.`);
+    console.log(`  ${pagesUrl}`);
+    console.log(`  Set the source to "GitHub Actions".`);
   });
 
 program.parse();
