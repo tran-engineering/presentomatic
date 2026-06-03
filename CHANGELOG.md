@@ -1,3 +1,10 @@
+# [2.25.0](https://github.com/tran-engineering/presentomatic/compare/v2.24.8...v2.25.0) (2026-06-03)
+
+
+### Features
+
+* add setup-github-workflow command and fix manualChunks for Vite 8 ([1cbed13](https://github.com/tran-engineering/presentomatic/commit/1cbed13c31dcea9439fa03971c1b538d4b01a6d8))
+
 ## [2.24.8](https://github.com/tran-engineering/presentomatic/compare/v2.24.7...v2.24.8) (2026-06-03)
 
 
