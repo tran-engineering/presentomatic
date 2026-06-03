@@ -52,10 +52,10 @@ async function viteConfig(arg, options) {
       outDir: options.output ? resolve(options.output) : undefined,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vendor-highlight-core': ['highlight.js/lib/core'],
-            'vendor-d3': ['d3-selection', 'd3-transition'],
-            'vendor-marked': ['marked']
+          manualChunks(id) {
+            if (id.includes('highlight.js/lib/core')) return 'vendor-highlight-core';
+            if (id.includes('d3-selection') || id.includes('d3-transition')) return 'vendor-d3';
+            if (id.includes('marked')) return 'vendor-marked';
           }
         }
       }
@@ -158,6 +158,72 @@ program
     }
     await browser.close();
     await server.close();
+  });
+
+program
+  .command('setup-github-workflow')
+  .description('Create a GitHub Actions workflow to deploy the presentation to GitHub Pages')
+  .option('-b, --branch <branch>', 'Branch to deploy from', 'main')
+  .argument(
+    '[string]',
+    'Path to the presentation directory, relative to the repo root',
+    '.'
+  )
+  .action(async (arg, options) => {
+    const workflowDir = resolve('.github', 'workflows');
+    await fs.mkdir(workflowDir, { recursive: true });
+
+    const workflowPath = path.join(workflowDir, 'static.yml');
+    const buildStep =
+      arg === '.'
+        ? `npx presentomatic build`
+        : `npx presentomatic build ${arg}`;
+
+    const workflow = `# Simple workflow for deploying static content to GitHub Pages
+name: Deploy a Presentomatic slide show to GitHub Pages
+
+on:
+  push:
+    branches: ['${options.branch}']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: \${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup Node
+        uses: actions/setup-node@v6.4.0
+      - name: Install Presentomatic
+        run: npm i presentomatic
+      - name: Build static HTML
+        run: ${buildStep}
+      - name: Setup Pages
+        uses: actions/configure-pages@v6
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: 'dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+`;
+
+    await fs.writeFile(workflowPath, workflow);
+    console.log(`Workflow written to ${workflowPath}`);
   });
 
 program.parse();
