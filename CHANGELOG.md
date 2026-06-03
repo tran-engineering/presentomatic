@@ -1,3 +1,10 @@
+## [2.24.8](https://github.com/tran-engineering/presentomatic/compare/v2.24.7...v2.24.8) (2026-06-03)
+
+
+### Bug Fixes
+
+* suppress Vite v8 dep scan error when installed from registry ([489ce8d](https://github.com/tran-engineering/presentomatic/commit/489ce8d0df8a61d012b99416cc43d925d4996798))
+
 ## [2.24.7](https://github.com/tran-engineering/presentomatic/compare/v2.24.6...v2.24.7) (2026-06-01)
 
 

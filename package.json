@@ -1,6 +1,6 @@
 {
   "name": "presentomatic",
-  "version": "2.24.7",
+  "version": "2.24.8",
   "description": "Simple presentations using markdown",
   "scripts": {
     "test": "vitest",
