@@ -40,10 +40,11 @@ try {
   child.stdout.on('data', (chunk) => (output += chunk.toString()));
   child.stderr.on('data', (chunk) => (output += chunk.toString()));
 
-  // CI runners are slower/colder than a local dev machine, so give the
-  // server plenty of time to print its ready banner, and fail fast (rather
-  // than waiting out the full timeout) if the process errors or exits first.
-  await waitForReady(child, () => output.includes('Local:'), 60000);
+  // CI runners are slower/colder than a local dev machine — the previous
+  // run took ~60s just to print the ready banner — so give the server
+  // generous headroom, and fail fast (rather than waiting out the full
+  // timeout) if the process errors or exits first.
+  await waitForReady(child, () => output.includes('Local:'), 180000);
 
   // Triggers Vite's module graph crawl (main.ts -> Presentomatic.svelte ->
   // Slide/Navigation/Laserpointer.svelte) and dependency pre-bundling,
