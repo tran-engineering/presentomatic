@@ -31,6 +31,9 @@ jobs:
       - name: Run tests
         run: npm test
 
+      - name: Run install smoke test
+        run: npm run test:install
+
       - name: Release
         run: npx semantic-release
         env:
