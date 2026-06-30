@@ -63,7 +63,6 @@ async function viteConfig(arg, options) {
     plugins: [svelte(), reloader(dir)],
     base: '',
     optimizeDeps: {
-      noDiscovery: true,
       include: ['highlight.js/lib/core', 'd3-selection', 'd3-transition', 'marked']
     },
     define: {

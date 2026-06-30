@@ -125,7 +125,9 @@
     // Dynamic import mermaid only when needed
     const mermaidNodes = slideContainer.querySelectorAll('pre[mermaid]');
     if (mermaidNodes.length > 0) {
+      console.log('mermaidy');
       import('mermaid').then(({ default: mermaid }) => {
+        console.log('mermaid loaded');
         mermaid.run({ nodes: mermaidNodes }).then(() => {
           mermaidNodes.forEach((node: Element) => {
             const svg = node.querySelector('svg');
