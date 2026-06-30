@@ -20,6 +20,7 @@ const stagingDir = mkdtempSync(path.join(tmpdir(), 'presentomatic-smoke-'));
 const globalPrefix = path.join(stagingDir, 'global');
 
 let child;
+let output = '';
 try {
   console.log('Packing presentomatic...');
   execFileSync('npm', ['pack', repoRoot, '--silent', '--pack-destination', stagingDir]);
@@ -33,14 +34,16 @@ try {
   const exampleDir = path.join(globalPrefix, 'lib', 'node_modules', 'presentomatic', 'example-presentation');
 
   console.log('Starting the dev server through the installed bin symlink...');
-  let output = '';
   child = spawn(bin, ['serve', exampleDir, '-p', String(port)], {
     cwd: tmpdir() // a real global install is always run from outside the package
   });
   child.stdout.on('data', (chunk) => (output += chunk.toString()));
   child.stderr.on('data', (chunk) => (output += chunk.toString()));
 
-  await waitFor(() => output.includes('Local:'), 15000);
+  // CI runners are slower/colder than a local dev machine, so give the
+  // server plenty of time to print its ready banner, and fail fast (rather
+  // than waiting out the full timeout) if the process errors or exits first.
+  await waitForReady(child, () => output.includes('Local:'), 60000);
 
   // Triggers Vite's module graph crawl (main.ts -> Presentomatic.svelte ->
   // Slide/Navigation/Laserpointer.svelte) and dependency pre-bundling,
@@ -54,22 +57,46 @@ try {
   await new Promise((resolve) => setTimeout(resolve, 3000));
 
   if (output.includes('Failed to run dependency scan') || output.includes('UNRESOLVED_IMPORT')) {
-    console.error(output);
     throw new Error('Dependency pre-bundling failed on a freshly installed package');
   }
 
   console.log('OK: dev server started cleanly on a freshly installed package.');
+} catch (err) {
+  console.error(output);
+  throw err;
 } finally {
   child?.kill();
   rmSync(stagingDir, { recursive: true, force: true });
 }
 
-async function waitFor(condition, timeoutMs) {
-  const start = Date.now();
-  while (!condition()) {
-    if (Date.now() - start > timeoutMs) {
-      throw new Error('Timed out waiting for the dev server to start');
+function waitForReady(proc, condition, timeoutMs) {
+  return new Promise((resolve, reject) => {
+    const timer = setInterval(() => {
+      if (condition()) {
+        cleanup();
+        resolve();
+      }
+    }, 100);
+    const timeout = setTimeout(() => {
+      cleanup();
+      reject(new Error(`Timed out after ${timeoutMs}ms waiting for the dev server to start`));
+    }, timeoutMs);
+    const onError = (err) => {
+      cleanup();
+      reject(err);
+    };
+    const onExit = (code, signal) => {
+      cleanup();
+      reject(new Error(`presentomatic exited before becoming ready (code=${code}, signal=${signal})`));
+    };
+    proc.once('error', onError);
+    proc.once('exit', onExit);
+
+    function cleanup() {
+      clearInterval(timer);
+      clearTimeout(timeout);
+      proc.off('error', onError);
+      proc.off('exit', onExit);
     }
-    await new Promise((resolve) => setTimeout(resolve, 100));
-  }
+  });
 }
