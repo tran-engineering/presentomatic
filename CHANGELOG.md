@@ -1,3 +1,10 @@
+## [2.26.1](https://github.com/tran-engineering/presentomatic/compare/v2.26.0...v2.26.1) (2026-06-30)
+
+
+### Bug Fixes
+
+* restore mermaid rendering by allowing Vite to auto-detect CJS deps ([5563cbf](https://github.com/tran-engineering/presentomatic/commit/5563cbfb73695a73abd8f23607b33aaaf53a9d4f))
+
 # [2.26.0](https://github.com/tran-engineering/presentomatic/compare/v2.25.0...v2.26.0) (2026-06-03)
 
 
