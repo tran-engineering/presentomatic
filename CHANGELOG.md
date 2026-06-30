@@ -1,3 +1,13 @@
+## [2.26.2](https://github.com/tran-engineering/presentomatic/compare/v2.26.1...v2.26.2) (2026-06-30)
+
+
+### Bug Fixes
+
+* harden smoke-test-install.mjs against slow CI startup ([7bc4ff7](https://github.com/tran-engineering/presentomatic/commit/7bc4ff7f6f4fc484c807b5b183cc5f9212d5fc54))
+* pin vite/vite-plugin-svelte below v8 to fix broken global installs ([7b1b4db](https://github.com/tran-engineering/presentomatic/commit/7b1b4dbf0d270f2f8e6c8e92e26a605065bdd7f2)), closes [vitejs/rolldown-vite#304](https://github.com/vitejs/rolldown-vite/issues/304)
+* raise smoke-test-install.mjs ready-banner timeout to 180s ([8ea48ab](https://github.com/tran-engineering/presentomatic/commit/8ea48ab60fa55a895bd45a33c97a22c0ecce16d2))
+* stream smoke-test-install.mjs output live and poll HTTP instead of log text ([5c0a7d8](https://github.com/tran-engineering/presentomatic/commit/5c0a7d857f0c76f72d01d1f9f818ee9d72868ae2))
+
 ## [2.26.1](https://github.com/tran-engineering/presentomatic/compare/v2.26.0...v2.26.1) (2026-06-30)
 
 
