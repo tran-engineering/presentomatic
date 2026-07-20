@@ -1,3 +1,11 @@
+## [2.26.3](https://github.com/tran-engineering/presentomatic/compare/v2.26.2...v2.26.3) (2026-07-20)
+
+
+### Bug Fixes
+
+* **deps:** revert typescript to v6, regenerate lockfile ([71650c8](https://github.com/tran-engineering/presentomatic/commit/71650c8e0175150fd051b0e891d465833df12051)), closes [#94](https://github.com/tran-engineering/presentomatic/issues/94)
+* **deps:** update dependency typescript to v7 ([#94](https://github.com/tran-engineering/presentomatic/issues/94)) ([c0f2cf6](https://github.com/tran-engineering/presentomatic/commit/c0f2cf6fbc8e38ec1d0006b0a778f7505a68966c))
+
 ## [2.26.2](https://github.com/tran-engineering/presentomatic/compare/v2.26.1...v2.26.2) (2026-06-30)
 
 
