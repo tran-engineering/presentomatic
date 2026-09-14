@@ -1,3 +1,10 @@
+## [2.26.4](https://github.com/tran-engineering/presentomatic/compare/v2.26.3...v2.26.4) (2026-09-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency mermaid to v12 ([#112](https://github.com/tran-engineering/presentomatic/issues/112)) ([dcaf509](https://github.com/tran-engineering/presentomatic/commit/dcaf5095604b3eba9354f2912a4482acf5b8a898))
+
 ## [2.26.3](https://github.com/tran-engineering/presentomatic/compare/v2.26.2...v2.26.3) (2026-07-20)
 
 
