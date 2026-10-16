@@ -28,6 +28,8 @@ npm i -g presentomatic
 
 You can also run it without installing: `npx presentomatic`.
 
+Requires Node.js 14 or newer.
+
 PDF export uses [Puppeteer](https://pptr.dev), which downloads a Chromium build when the package is installed.
 
 ## Quick start
