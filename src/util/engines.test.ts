@@ -3,6 +3,6 @@ import pkg from '../../package.json';
 
 describe('package engines', () => {
   it('declares the minimum Node.js version', () => {
-    expect(pkg.engines?.node).toBe('>=20');
+    expect(pkg.engines?.node).toBe('>=22.22.2');
   });
 });

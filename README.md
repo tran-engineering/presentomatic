@@ -20,7 +20,7 @@ A live example is available at https://tran-engineering.github.io/presentomatic.
 
 ## Installation
 
-Requires Node.js 22.12 or newer. Install globally from npm:
+Requires Node.js 22.22.2 or newer. Install globally from npm:
 
 ```bash
 npm i -g presentomatic
