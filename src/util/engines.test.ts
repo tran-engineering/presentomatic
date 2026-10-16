@@ -9,6 +9,6 @@ describe('package engines', () => {
 
 describe('package metadata', () => {
   it('uses the MIT license', () => {
-    expect(pkg.license).toBe('Apache-2.0');
+    expect(pkg.license).toBe('MIT');
   });
 });
