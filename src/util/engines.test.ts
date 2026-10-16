@@ -6,3 +6,9 @@ describe('package engines', () => {
     expect(pkg.engines?.node).toBe('>=22.22.2');
   });
 });
+
+describe('package metadata', () => {
+  it('uses the MIT license', () => {
+    expect(pkg.license).toBe('Apache-2.0');
+  });
+});
