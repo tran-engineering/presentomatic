@@ -1,3 +1,10 @@
+## [2.26.7](https://github.com/tran-engineering/presentomatic/compare/v2.26.6...v2.26.7) (2026-10-17)
+
+
+### Bug Fixes
+
+* raise declared Node.js minimum to 22.22.2 ([6670741](https://github.com/tran-engineering/presentomatic/commit/667074138c15dd2007261e02299562000e41d487))
+
 ## [2.26.6](https://github.com/tran-engineering/presentomatic/compare/v2.26.5...v2.26.6) (2026-10-17)
 
 
