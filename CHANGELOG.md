@@ -1,3 +1,10 @@
+## [2.26.5](https://github.com/tran-engineering/presentomatic/compare/v2.26.4...v2.26.5) (2026-10-17)
+
+
+### Bug Fixes
+
+* read file list from the MARKDOWN_FILES global for file navigation ([eaa81d3](https://github.com/tran-engineering/presentomatic/commit/eaa81d3c584dbd887a33a4846ad423754961e909))
+
 ## [2.26.4](https://github.com/tran-engineering/presentomatic/compare/v2.26.3...v2.26.4) (2026-09-14)
 
 
