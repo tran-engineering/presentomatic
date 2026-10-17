@@ -17,6 +17,9 @@
     "presentomatic": "presentomatic.js"
   },
   "type": "module",
+  "engines": {
+    "node": ">=22.22.2"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tran-engineering/presentomatic.git"
