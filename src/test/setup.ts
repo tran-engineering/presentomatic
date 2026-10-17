@@ -1,14 +1,5 @@
 import '@testing-library/jest-dom/vitest';
 
-// Mock window.MARKDOWN_FILES for components that access it
-declare global {
-  interface Window {
-    MARKDOWN_FILES: string[];
-  }
-}
-
-window.MARKDOWN_FILES = ['test.md'];
-
 // Mock WebKitCSSMatrix for d3 animations in jsdom
 class MockDOMMatrix {
   a = 1;

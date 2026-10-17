@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/svelte';
+import { render, screen, waitFor, fireEvent } from '@testing-library/svelte';
 import Presentomatic from './Presentomatic.svelte';
 
 const mockMarkdown = `# Slide 1
@@ -82,6 +82,14 @@ describe('Presentomatic', () => {
       const main = screen.getByRole('main');
       expect(main.querySelector('.slide')).toHaveClass('title-slide');
     });
+  });
+
+  it('opens the next presentation file from the file navigation', async () => {
+    render(Presentomatic);
+
+    await fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+
+    expect(new URLSearchParams(window.location.search).get('f')).toBe('other.md');
   });
 
   it('navigates to requested page from URL hash', async () => {
