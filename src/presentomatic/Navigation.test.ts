@@ -1,8 +1,33 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/svelte';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import ts from 'typescript';
+import { compile, preprocess } from 'svelte/compiler';
 import Navigation from './Navigation.svelte';
 
 const files = ['00-intro.md', '01-middle.md', '02-end.md'];
+
+describe('Navigation reactivity', () => {
+  it('declares reassigned bound elements with $state', async () => {
+    const filename = resolve(__dirname, 'Navigation.svelte');
+    const source = readFileSync(filename, 'utf8');
+    const { code } = await preprocess(
+      source,
+      {
+        script: ({ content }) => ({
+          code: ts.transpileModule(content, {
+            compilerOptions: { target: ts.ScriptTarget.ESNext, verbatimModuleSyntax: true }
+          }).outputText
+        })
+      },
+      { filename }
+    );
+    const { warnings } = compile(code, { filename });
+
+    expect(warnings.map((w) => w.code)).not.toContain('non_reactive_update');
+  });
+});
 
 describe('Navigation file switching', () => {
   let originalLocation: Location;

@@ -6,7 +6,7 @@
   let visible = false;
   let fadeOutRef = undefined;
   let slideContainer: HTMLElement;
-  let fileContainer: HTMLElement;
+  let fileContainer: HTMLElement = $state()!;
 
   function fadeIn() {
     if (disableAnimations) return;
