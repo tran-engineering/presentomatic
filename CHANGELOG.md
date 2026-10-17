@@ -1,3 +1,10 @@
+## [2.26.6](https://github.com/tran-engineering/presentomatic/compare/v2.26.5...v2.26.6) (2026-10-17)
+
+
+### Bug Fixes
+
+* declare Navigation fileContainer with $state ([ef32e2f](https://github.com/tran-engineering/presentomatic/commit/ef32e2fcfc63e6b24b8f73c4061c1bde04ec017f))
+
 ## [2.26.5](https://github.com/tran-engineering/presentomatic/compare/v2.26.4...v2.26.5) (2026-10-17)
 
 
