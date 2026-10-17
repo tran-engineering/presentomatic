@@ -77,10 +77,4 @@
   {/if}
 </main>
 <Laserpointer />
-<Navigation
-  {slides}
-  {currentSlide}
-  {disableAnimations}
-  currentFile={file}
-  files={window.MARKDOWN_FILES}
-/>
+<Navigation {slides} {currentSlide} {disableAnimations} currentFile={file} files={MARKDOWN_FILES} />

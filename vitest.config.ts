@@ -16,7 +16,7 @@ export default defineConfig({
     conditions: ['browser']
   },
   define: {
-    MARKDOWN_FILES: JSON.stringify(['test.md']),
+    MARKDOWN_FILES: JSON.stringify(['test.md', 'other.md']),
     CSS_FILES: JSON.stringify([])
   }
 });

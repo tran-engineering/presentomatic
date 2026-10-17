@@ -100,7 +100,7 @@
 <div role="region" class="nav-area" onmousemove={fadeIn}></div>
 
 <nav>
-  {#if MARKDOWN_FILES?.length > 1}
+  {#if files?.length > 1}
     <div bind:this={fileContainer} class="files">
       <button class="title-slide" onclick={() => previousFile()}>Previous</button>
       <button>{currentFile}</button>
