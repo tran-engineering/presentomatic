@@ -2,7 +2,7 @@
 
 Markdown presentations made simple.
 
-Presentomatic turns a directory of Markdown files into a browser-based slideshow. Write slides in plain Markdown, run one command, and present, export to PDF, or publish a static site.
+Presentomatic turns a directory of Markdown files into a browser-based slideshow. Write slides in plain Markdown, run one command, then present them, export to PDF, or publish a static site.
 
 A live example is available at https://tran-engineering.github.io/presentomatic. Its source is the [`example-presentation`](example-presentation) directory in this repository.
 
@@ -38,7 +38,7 @@ Put your Markdown files and assets (images, CSS) in a directory, then run this i
 presentomatic
 ```
 
-The presentation is served on port 1337 (open the printed URL, e.g. http://localhost:1337). Edits to `.md` and `.css` files reload the browser automatically.
+The presentation is served on port 1337 by default. Open the printed URL, for example http://localhost:1337. Editing `.md` or `.css` files reloads the browser automatically.
 
 Separate slides with `---`:
 
@@ -80,7 +80,7 @@ Tomorrow will also be sunny.
 
 The [example presentation](example-presentation) demonstrates each of these features.
 
-### Keyboard shortcuts
+## Presenting
 
 | Key         | Action                                 |
 | ----------- | -------------------------------------- |
@@ -92,9 +92,9 @@ The [example presentation](example-presentation) demonstrates each of these feat
 
 The current slide number is kept in the URL hash (for example `#3`), so you can bookmark or share a link to a specific slide.
 
-### Custom styling
+## Custom styling
 
-Presentomatic automatically includes every `.css` file in your presentation directory. Override the theme with these CSS variables:
+Presentomatic includes every `.css` file in your presentation directory automatically. Override the theme by setting these CSS variables:
 
 | Variable            | Default   | Role                     |
 | ------------------- | --------- | ------------------------ |
@@ -121,6 +121,8 @@ Every command takes an optional path to the presentation directory (default: the
 | `presentomatic build [dir]`                 | Build static HTML. Option: `-o, --output <dir>` (default `dist`).                                                                  |
 | `presentomatic pdf [dir]`                   | Write one PDF per Markdown file. Options: `-o, --output <dir>` (default `.`), `-p, --port <port>`.                                 |
 | `presentomatic setup-github-workflow [dir]` | Write a GitHub Actions workflow that publishes the presentation to GitHub Pages. Option: `-b, --branch <branch>` (default `main`). |
+
+## Exporting and publishing
 
 ### Building PDFs
 
@@ -191,3 +193,9 @@ Releases are automated with [semantic-release](https://semantic-release.gitbook.
 ## License
 
 [MIT](LICENSE)
+
+## Haiku
+
+_Pause, then the next slide —_  
+_the room leans forward slightly._  
+_One clear idea, held._
